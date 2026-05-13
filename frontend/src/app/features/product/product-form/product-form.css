@@ -1,0 +1,43 @@
+textarea {
+    width: 275px;
+    height: 150px;
+}
+
+#metadata {
+    display: flex;
+}
+
+#name {
+    margin-inline: 5px;
+}
+
+#category {
+    margin-inline: 5px;
+}
+
+#option {
+    margin-inline: 5px;
+}
+
+#user-defined {
+    margin: 10px;
+}
+
+#derived {
+    margin: 10px;
+    text-align: center;
+}
+
+.form-layout {
+  display: grid;
+  grid-template-columns: .6fr 1.2fr;
+  gap: 24px;
+  align-items: start;
+}
+
+#productVariants {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+

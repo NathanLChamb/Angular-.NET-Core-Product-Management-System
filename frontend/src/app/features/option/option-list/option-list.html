@@ -1,0 +1,36 @@
+@if (options.error()) {
+    <p>Options retrieval error</p>
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Values</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (options.isLoading()) {
+            <p>Loading...</p>
+        }
+        @if (options.value(); as result) {
+            @for (option of result.items; track option.id) {
+                <tr>
+                    <td>{{option.id}}</td>
+                    <td>{{option.name}}</td>
+                    <td>
+                    @for (optionValue of option.optionValues;  track optionValue.id) {
+                        {{option.id}}{{!$last ? ", " : "" }}
+                    }
+                    </td>
+                    <td>
+                        <button type="button" [routerLink]="['edit', option.id]">Edit</button>
+                        <button (click)="handleDelete(option.id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

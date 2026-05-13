@@ -1,0 +1,131 @@
+<h2>{{ isEditMode() ? "Edit Product" : "Create Product" }}</h2>
+
+<form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-layout">
+  <section id="user-defined">
+    <fieldset>
+      <legend>Product Info</legend>
+    
+      <div id="name">
+        <label for="name">Name</label>
+        <input id="name" formControlName="name" />
+
+        @if (form.controls.name.invalid &&
+              (form.controls.name.dirty || form.controls.name.touched)) {
+
+          @if (form.controls.name.hasError('required')) {
+            <small>Name is required</small>
+          }
+
+          @if (form.controls.name.hasError('maxlength')) {
+            <small>Name must be less than 50 characters long</small>
+          }
+        }
+      </div>
+      <section id="metadata">
+        <div id="category">
+          <h3>Categories</h3>
+
+          @for (category of categories.value()?.items ?? []; track category.id) {
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  [checked]="form.controls.categoryIds.value.includes(category.id)"
+                  (change)="toggleCategory(category.id)"
+                />
+
+                {{ category.name }}
+              </label>
+            </div>
+          }
+        </div>
+
+        <div id="option">
+          <h3>options</h3>
+
+          @for (option of options.value()?.items ?? []; track option.id) {
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  [checked]="form.controls.optionIds.value.includes(option.id)"
+                  (change)="toggleOption(option.id)"
+                />
+
+                {{ option.name }}
+              </label>
+            </div>
+          }
+        </div>
+      </section>
+      <section class="description-container">
+        <div>
+          <h3><label for="description">Description</label></h3>
+        </div>
+        <div>
+          <textarea id="description" formControlName="description"></textarea>
+
+            @if (form.controls.description.invalid && (form.controls.description.dirty || form.controls.description.touched)) {
+
+              @if (form.controls.description.hasError('required')) {
+                <small>Description is required</small>
+              }
+
+              @if (form.controls.description.hasError('maxlength')) {
+                <small>Description must be less than 300 characters long</small>
+              }
+            }
+        </div>
+          <button type="submit" [disabled]="form.invalid">Submit</button> 
+      </section>
+    </fieldset>
+  </section>
+
+  <section id="derived">
+    <!-- VARIANTS -->
+    <fieldset>
+      <legend>Variants</legend>
+
+      <div id="productVariants" formArrayName="productVariants">
+
+        @for (variant of productVariants.controls; track $index; let i = $index) {
+
+          <div [formGroupName]="i" class="variant-card">
+
+            <h4>
+              Variant {{ i + 1 }}
+            </h4>
+
+            <div>
+              <strong>Combination:</strong>
+                @for (optionValueId of variant.controls.optionValueIds.value; track $index) {
+                  {{ optionValueMap().get(optionValueId) }}{{ !$last ? " / " : "" }}
+
+                }
+            </div>
+            <!-- SKU -->
+            <div>
+              <label [for]="'sku-' + i">SKU</label>
+              <input [id]="'sku-' + i" formControlName="sku" />
+            </div>
+
+            <!-- PRICE -->
+            <div>
+              <label [for]="'price-' + i">Price</label>
+              <input type="number" [id]="'price-' + i" formControlName="price" />
+            </div>
+
+            <!-- STOCK -->
+            <div>
+              <label [for]="'stock-' + i">Stock Quantity</label>
+              <input type="number" [id]="'stock-' + i" formControlName="stockQuantity" />
+            </div>
+
+          </div>
+        }
+      </div>
+    </fieldset>
+  </section>
+  </div>
+</form>

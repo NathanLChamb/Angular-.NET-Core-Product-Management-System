@@ -1,0 +1,41 @@
+<h2>{{isEditMode() ? "Edit Option" : "Create Option"}}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="name">Name</label>
+        <input id="name" formControlName="name" />
+            @if (name.invalid && (name.touched || name.dirty)) {
+                @if (name.hasError('required')) {
+                    <small>Name is required</small>
+                }
+                @if (name.hasError('maxlength')) {
+                    <small>Name must be less than 50 characters long</small>
+                }
+            }
+    </div>
+    <div formArrayName="optionValues">
+        @for (group of optionValues.controls; track $index; let i = $index) {
+            @let optionValue = group.controls.value;
+            <div [formGroupName]="i">
+                <input type="hidden" formControlName="id" />
+                <label [for]="'value-' + i">Value</label>
+                <input [id]="'value-' + i" formControlName="value" placeholder="Enter option value" />
+                <button type="button" (click)="removeOptionValue(i)" [disabled]="optionValues.length === 1">Remove</button>
+
+                @if (optionValue.invalid && (optionValue.dirty || optionValue.touched)) {
+                    <div>
+                        @if (optionValue.hasError('required')) {
+                            <small>Value is required</small>
+                        }
+                        @if (optionValue.hasError('maxlength')) {
+                            <small>Value must be less than 50 characters long</small>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <button type="button" (click)="addOptionValue()">Add</button>
+    <button type="submit" [disabled]="form.invalid || option.isLoading()">Submit</button>
+</form>

@@ -1,0 +1,24 @@
+﻿using eCommercePractice4.Domain.Product;
+using System.ComponentModel.DataAnnotations;
+
+namespace eCommercePractice4.Application.DTOs.Product
+{
+    public class CreateProductDto
+    {
+        [Required]
+        [StringLength(50)]
+        public required string Name { get; set; }
+        [Required]
+        [StringLength(300)]
+        public required string Description { get; set; }
+        [Required]
+        [MinLength(1)]
+        public List<int> CategoryIds { get; set; } = new();
+        [Required]
+        [MinLength(1)]
+        public List<int> OptionIds { get; set; } = new();
+        [Required]
+        [MinLength(1)]
+        public List<CreateProductVariantDto> ProductVariants { get; set; } = new();
+    }
+}

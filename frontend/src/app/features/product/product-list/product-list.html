@@ -1,0 +1,96 @@
+@if (products.error()) {
+    <p>Products retrieval error</p>
+}
+
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Variants</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (products.isLoading()) {
+            <tr>
+                <td colspan="9">Loading...</td>
+            </tr>
+        }
+        @if (products.value(); as result) {
+            @for (product of result.items; track product.id) {
+                <tr>
+                    <td>
+                        <button (click)="toggle(product.id)">
+                            {{isExpanded(product.id) ? '-' : '+'}}
+                        </button>
+                    </td>
+                    <td>{{product.id}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.description}}</td>
+                    <td>{{product.productVariants.length}}</td>     
+                    <td>{{product.createdAt | date:'short'}}</td>
+                    <td>{{product.updatedAt | date:'short'}}</td>
+                    <td>
+                        <button type="button" [routerLink]="['edit', product.id]">Edit</button>
+                        <button type="button" (click)="handleDelete(product.id)">Delete</button>
+                    </td>
+                </tr>
+
+                @if (isExpanded(product.id)) {
+                    <tr>
+                        <td colspan="6">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Options</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                    @for (variant of product.productVariants; track variant.id) {
+                                        <tr>
+                                            <td>{{ variant.sku }}</td>
+                                            <td>{{ variant.price }}</td>
+                                            <td>{{ variant.stockQuantity }}</td>
+
+                                            <td>
+                                                @for (opt of variant.optionValues; track opt.id) {
+                                                    {{ opt.value }}{{ !$last ? ', ' : '' }}
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <div>
+                                <strong>Categories:</strong>
+                                @for (category of product.categories; track category.id) {
+                                {{ category.name }}{{ !$last ? ', ' : '' }}
+                                }
+
+                                <br />
+
+                                <strong>Options:</strong>
+                                @for (option of product.options; track option.id) {
+                                {{ option.name }}{{ !$last ? ', ' : '' }}
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<button (click)="previousPage()" [disabled]="pageNumber() === 1">Previous</button>
+<span>Page {{pageNumber()}} of {{totalPages()}}</span>
+<button (click)="nextPage()" [disabled]="pageNumber() === totalPages()">Next</button>

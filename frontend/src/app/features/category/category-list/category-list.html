@@ -1,0 +1,36 @@
+@if (categories.error()) {
+    <p>Categories retrieval error</p>
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (categories.isLoading()) {
+            <p>Loading...</p>
+        }
+        @if (categories.value(); as result) {
+            @for (category of result.items; track category.id) {
+                <tr>
+                    <td>{{category.id}}</td>
+                    <td>{{category.name}}</td>
+                    <td>{{category.description}}</td>
+                    <td>
+                        <button type="button" [routerLink]="['edit', category.id]">Edit</button>
+                        <button type="button" (click)="handleDelete(category.id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<button (click)="previousPage()" [disabled]="pageNumber() === 1">Previous</button>
+<span>Page {{pageNumber()}} of {{totalPages()}}</span>
+<button (click)="nextPage()" [disabled]="pageNumber() === totalPages()">Next</button>
