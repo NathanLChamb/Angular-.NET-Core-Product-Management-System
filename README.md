@@ -1,15 +1,20 @@
 # Angular-.NET-Core-Product-Management-System
 Full-stack product management system built with Angular and ASP.NET Core featuring dynamic product variants, reactive forms, signals, and EF Core aggregate synchronization.
 
-The application supports complex product variant generation, category and option management, dynamic reactive forms, and relational aggregate synchronization using Entity Framework Core.
+The application manages a product catalog where each product can have:
 
-The frontend uses Angular standalone components, signals, rxResource, and strongly typed reactive forms to build a maintainable reactive state architecture.
+- Categories
+- Options (e.g. Color, Size)
+- Option Values (e.g. Red, Blue, Small, Large)
+- Dynamically generated product variants based on option combinations
+
+Product variants are generated using a cartesian product algorithm and synchronized with persisted state while preserving user edits.
 
 ## Features
 
-- Product CRUD management
-- Category management
-- Product option and option value management
+### Frontend
+
+- Product, Category, and Option CRUD UI
 - Dynamic product variant generation
 - Cartesian product generation for all valid variant combinations
 - Variant reconciliation preserving existing edits
@@ -17,12 +22,16 @@ The frontend uses Angular standalone components, signals, rxResource, and strong
 - Pagination support
 - Strongly typed Angular reactive forms
 - Angular signals + computed/effect architecture
-- Shared create/edit product forms
+- Shared create/edit forms
 - Edit mode state hydration from backend DTOs
+
+### Backend
+
 - ASP.NET Core REST APIs
 - Entity Framework Core relational aggregate synchronization
-- DTO projection using LINQ Select()
--Global exception handling middleware
+- Product, category, option, and variant management
+- DTO projection
+- Global exception handling middleware
 
 ## Tech Stack
 
@@ -30,17 +39,18 @@ The frontend uses Angular standalone components, signals, rxResource, and strong
 
 - Angular
 - TypeScript
-- Angular Signals
-- rxResource
 - Reactive Forms
-- Standalone Components
+- rxResource
+- Signals
 
 ### Backend
 
 - ASP.NET Core Web API
 - Entity Framework Core
-- SQL Server
-- Architecture Concepts
+- MSSQL Server
+
+## Architecture Concepts
+
 - Reactive state management
 - Dynamic form reconciliation
 - Aggregate synchronization
@@ -50,20 +60,11 @@ The frontend uses Angular standalone components, signals, rxResource, and strong
 - Nested aggregate updates
 
 ## Screenshots
-Product List
+### Product Form
+![Product Form](./screenshots/product-form.jpg)
 
-
-
-
-Product Form
-
-
-
-
-Product Variants
-
-
-
+### Product List
+![Product List](./screenshots/product-list.jpg)
 
 ## Architecture Notes
 ### Dynamic Variant Generation
@@ -78,10 +79,10 @@ The frontend uses Angular signals, computed values, and effects alongside Reacti
 
 The backend performs manual reconciliation of nested aggregates including:
 
-product categories
-product options
-product variants
-variant option values
+- product categories
+- product options
+- product variants
+- variant option values
 
 This avoids blind entity replacement and maintains relational consistency.
 
