@@ -1,42 +1,40 @@
 # Angular-.NET-Core-Product-Management-System
+
 Full-stack product management system built with Angular and ASP.NET Core featuring dynamic product variants, reactive forms, signals, and EF Core aggregate synchronization.
 
-The application manages a product catalog where each product can have:
+---
+
+## Overview
+
+This is a full-stack product management system built with Angular and ASP.NET Core.
+
+The goal of this system is to provide a flexible way to manage products with complex variant structures while keeping both frontend and backend models consistent.
+
+It simulates a real-world eCommerce product catalog where products can have:
 
 - Categories
 - Options (e.g. Color, Size)
-- Option Values (e.g. Red, Blue, Small, Large)
+- Option Values (e.g. Red, Blue, Large, Small)
 - Dynamically generated product variants based on option combinations
 
-Product variants are generated using a cartesian product algorithm and synchronized with persisted state while preserving user edits.
+The system supports full CRUD operations and keeps frontend and backend state synchronized across complex relational data.
 
-## Features
+---
 
-### Frontend
+## Key Features
 
-- Product, Category, and Option CRUD UI
-- Dynamic product variant generation
-- Cartesian product generation for all valid variant combinations
-- Variant reconciliation preserving existing edits
-- Expandable product list with nested variants
-- Pagination support
+- Automatic generation of product variants using a cartesian product algorithm
+- Smart reconciliation logic that preserves manually edited variants
 - Strongly typed Angular reactive forms
-- Angular signals + computed/effect architecture
-- Shared create/edit forms
-- Edit mode state hydration from backend DTOs
+- EF Core-based relational data modeling
+- RESTful API for products, categories, and options
+- Centralized backend error handling middleware
 
-### Backend
-
-- ASP.NET Core REST APIs
-- Entity Framework Core relational aggregate synchronization
-- Product, category, option, and variant management
-- DTO projection
-- Global exception handling middleware
+---
 
 ## Tech Stack
 
 ### Frontend
-
 - Angular
 - TypeScript
 - Reactive Forms
@@ -44,10 +42,11 @@ Product variants are generated using a cartesian product algorithm and synchroni
 - Signals
 
 ### Backend
-
 - ASP.NET Core Web API
 - Entity Framework Core
 - MSSQL Server
+
+---
 
 ## Architecture Concepts
 
@@ -59,21 +58,31 @@ Product variants are generated using a cartesian product algorithm and synchroni
 - Cartesian product generation
 - Nested aggregate updates
 
+---
+
 ## Screenshots
+
 ### Product Form
 ![Product Form](./screenshots/product-form.jpg)
 
 ### Product List
 ![Product List](./screenshots/product-list.jpg)
 
+---
+
 ## Architecture Notes
+
 ### Dynamic Variant Generation
 
 Product variants are generated from selected product options using a cartesian product algorithm. Existing variant rows are preserved through reconciliation logic using stable variant identity keys.
 
+---
+
 ### Reactive Form Synchronization
 
 The frontend uses Angular signals, computed values, and effects alongside Reactive Forms. Form state is synchronized with derived reactive state while preserving user edits during edit-mode hydration.
+
+---
 
 ### Aggregate Update Pattern
 
@@ -86,6 +95,8 @@ The backend performs manual reconciliation of nested aggregates including:
 
 This avoids blind entity replacement and maintains relational consistency.
 
+---
+
 ## Form Architecture
 
 The application uses strongly typed Angular Reactive Forms with:
@@ -95,3 +106,35 @@ The application uses strongly typed Angular Reactive Forms with:
 - Shared create/edit form architecture
 - Form seeding from backend DTOs
 - Synchronization guards to prevent derived state overwrites
+
+---
+
+## Running the Project
+
+### 1. Configuration
+
+Create an `appsettings.json` file in the API project:
+
+```json
+{
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "DefaultConnectionString": "Data Source=YOUR_SERVER;Initial Catalog=DATABASE_NAME;TrustServerCertificate=True;"
+  },
+  "AllowedOrigins": [
+    "http://localhost:5000",
+    "http://localhost:5001",
+    "http://localhost:4200"
+  ]
+}
+```
+
+### 2. Execution Steps
+
+Backend:
+dotnet ef database update
+dotnet run
+
+Frontend:
+npm install
+ng serve

@@ -22,7 +22,7 @@
                     <td>{{option.name}}</td>
                     <td>
                     @for (optionValue of option.optionValues;  track optionValue.id) {
-                        {{option.id}}{{!$last ? ", " : "" }}
+                        {{optionValue.value}}{{!$last ? ", " : "" }}
                     }
                     </td>
                     <td>

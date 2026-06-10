@@ -29,4 +29,5 @@
                 </div>
             }
     </div>
+    <button type="submit" [disabled]="form.invalid || category.isLoading()">Submit</button>
 </form>
