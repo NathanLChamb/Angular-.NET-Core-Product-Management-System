@@ -1,12 +1,10 @@
 # Angular-.NET-Core-Product-Management-System
 
-Full-stack product management system built with Angular and ASP.NET Core featuring dynamic product variants, reactive forms, signals, and EF Core aggregate synchronization.
+Full-stack product management system built with Angular, ASP.NET Core, and PostgreSQL featuring dynamic product variants, reactive forms, signals, and EF Core aggregate synchronization.
 
 ---
 
 ## Overview
-
-This is a full-stack product management system built with Angular and ASP.NET Core.
 
 The goal of this system is to provide a flexible way to manage products with complex variant structures while keeping both frontend and backend models consistent.
 
@@ -44,7 +42,7 @@ The system supports full CRUD operations and keeps frontend and backend state sy
 ### Backend
 - ASP.NET Core Web API
 - Entity Framework Core
-- MSSQL Server
+- PostgreSQL
 
 ---
 
@@ -117,9 +115,15 @@ Create an `appsettings.json` file in the API project:
 
 ```json
 {
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
   "AllowedHosts": "*",
   "ConnectionStrings": {
-    "DefaultConnectionString": "Data Source=YOUR_SERVER;Initial Catalog=DATABASE_NAME;TrustServerCertificate=True;"
+    "DefaultConnectionString": "YOUR_CONNECTION_STRING"
   },
   "AllowedOrigins": [
     "http://localhost:5000",
@@ -127,6 +131,7 @@ Create an `appsettings.json` file in the API project:
     "http://localhost:4200"
   ]
 }
+
 ```
 
 ### 2. Execution Steps
