@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1eBfDjRlZLo=",
+  "dgSpecHash": "OZ1oOYLKin0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Infrastructure\\eCommerce.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Infrastructure\\eCommerce.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Natha\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Natha\\.nuget\\packages\\microsoft.build.framework\\18.0.2\\microsoft.build.framework.18.0.2.nupkg.sha512",

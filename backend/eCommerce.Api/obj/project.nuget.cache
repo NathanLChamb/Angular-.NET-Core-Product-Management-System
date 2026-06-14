@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jsKT8T1/geU=",
+  "dgSpecHash": "jAvvdB4JU28=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Api\\eCommerce.Api.csproj",
+  "projectFilePath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Api\\eCommerce.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Natha\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Natha\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.8\\microsoft.aspnetcore.openapi.10.0.8.nupkg.sha512",

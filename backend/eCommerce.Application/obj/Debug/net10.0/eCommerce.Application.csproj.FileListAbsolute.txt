@@ -13,3 +13,19 @@ C:\Users\Natha\Desktop\AngularApps\Backend\eCommerce1\eCommerce.Application\obj\
 C:\Users\Natha\Desktop\AngularApps\Backend\eCommerce1\eCommerce.Application\obj\Debug\net10.0\refint\eCommerce.Application.dll
 C:\Users\Natha\Desktop\AngularApps\Backend\eCommerce1\eCommerce.Application\obj\Debug\net10.0\eCommerce.Application.pdb
 C:\Users\Natha\Desktop\AngularApps\Backend\eCommerce1\eCommerce.Application\obj\Debug\net10.0\ref\eCommerce.Application.dll
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\bin\Debug\net10.0\eCommerce.Application.deps.json
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\bin\Debug\net10.0\eCommerce.Application.dll
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\bin\Debug\net10.0\eCommerce.Application.pdb
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\bin\Debug\net10.0\eCommerce.Domain.dll
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\bin\Debug\net10.0\eCommerce.Domain.pdb
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\obj\Debug\net10.0\eCommerce.Application.csproj.AssemblyReference.cache
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\obj\Debug\net10.0\eCommerce.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\obj\Debug\net10.0\eCommerce.Application.AssemblyInfoInputs.cache
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\obj\Debug\net10.0\eCommerce.Application.AssemblyInfo.cs
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\obj\Debug\net10.0\eCommerce.Application.csproj.CoreCompileInputs.cache
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\obj\Debug\net10.0\eCommerce.Application.sourcelink.json
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\obj\Debug\net10.0\eCommerc.FF2FEB98.Up2Date
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\obj\Debug\net10.0\eCommerce.Application.dll
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\obj\Debug\net10.0\refint\eCommerce.Application.dll
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\obj\Debug\net10.0\eCommerce.Application.pdb
+C:\Users\Natha\Desktop\AngularApps\Fullstack Product Management Application\backend\eCommerce.Application\obj\Debug\net10.0\ref\eCommerce.Application.dll

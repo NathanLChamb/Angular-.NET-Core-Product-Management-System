@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Domain\\eCommerce.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Domain\\eCommerce.Domain.csproj",
       "projectName": "eCommerce.Domain",
-      "projectPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Domain\\eCommerce.Domain.csproj",
+      "projectPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Domain\\eCommerce.Domain.csproj",
       "packagesPath": "C:\\Users\\Natha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Domain\\obj\\",
+      "outputPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

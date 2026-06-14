@@ -2268,11 +2268,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Api\\eCommerce.Api.csproj",
+      "projectUniqueName": "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Api\\eCommerce.Api.csproj",
       "projectName": "eCommerce.Api",
-      "projectPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Api\\eCommerce.Api.csproj",
+      "projectPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Api\\eCommerce.Api.csproj",
       "packagesPath": "C:\\Users\\Natha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Api\\obj\\",
+      "outputPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2295,11 +2295,11 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Application\\eCommerce.Application.csproj": {
-              "projectPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Application\\eCommerce.Application.csproj"
+            "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Application\\eCommerce.Application.csproj": {
+              "projectPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Application\\eCommerce.Application.csproj"
             },
-            "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Infrastructure\\eCommerce.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Infrastructure\\eCommerce.Infrastructure.csproj"
+            "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Infrastructure\\eCommerce.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Infrastructure\\eCommerce.Infrastructure.csproj"
             }
           }
         }

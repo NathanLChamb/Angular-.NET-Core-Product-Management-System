@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "E7a+u9C4FLw=",
+  "dgSpecHash": "i2U+uFWgF/k=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Backend\\eCommerce1\\eCommerce.Application\\eCommerce.Application.csproj",
+  "projectFilePath": "C:\\Users\\Natha\\Desktop\\AngularApps\\Fullstack Product Management Application\\backend\\eCommerce.Application\\eCommerce.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Natha\\.nuget\\packages\\microsoft.entityframeworkcore\\10.0.8\\microsoft.entityframeworkcore.10.0.8.nupkg.sha512",
     "C:\\Users\\Natha\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\10.0.8\\microsoft.entityframeworkcore.abstractions.10.0.8.nupkg.sha512",
