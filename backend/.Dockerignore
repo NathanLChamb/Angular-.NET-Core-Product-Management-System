@@ -3,3 +3,5 @@ obj/
 .git/
 .vs/
 *.user
+*.suo
+appsettings.Development.json

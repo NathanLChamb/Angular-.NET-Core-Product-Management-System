@@ -8,17 +8,17 @@ services:
     depends_on:
       - backend
 
-
   backend:
     build:
       context: ./backend
     ports:
       - "5001:8080"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnectionString: Host=postgres;Port=5432;Database=ecommerce;Username=postgres;Password=postgres
 
   postgres:
     image: postgres:17
@@ -31,7 +31,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
 
 volumes:
   postgres_data:

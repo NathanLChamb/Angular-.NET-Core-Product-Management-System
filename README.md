@@ -109,37 +109,49 @@ The application uses strongly typed Angular Reactive Forms with:
 
 ## Running the Project
 
-### 1. Configuration
+### Prerequisites
+Docker Desktop
+Docker Compose
+Configuration
 
-Create an `appsettings.json` file in the API project:
+The application is fully containerized and uses Docker environment variables for runtime configuration.
 
-```json
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "AllowedHosts": "*",
-  "ConnectionStrings": {
-    "DefaultConnectionString": "YOUR_CONNECTION_STRING"
-  },
-  "AllowedOrigins": [
-    "http://localhost:5000",
-    "http://localhost:5001",
-    "http://localhost:4200"
-  ]
-}
+The backend connection string is provided through docker-compose.yml and connects to PostgreSQL using Docker networking:
 
-```
+Host=postgres;Port=5432;Database=ecommerce;Username=postgres;Password=postgres
 
-### 2. Execution Steps
+No local PostgreSQL installation is required.
 
-Backend:
-dotnet ef database update
-dotnet run
+Start the Application
+
+From the project root directory:
+
+docker compose up --build
+
+This command will:
+
+Build the Angular frontend
+Build the ASP.NET Core API
+Start PostgreSQL
+Apply EF Core migrations automatically
+Start Nginx to serve the Angular application
+Start Using Existing Images
+docker compose up
+Stop the Application
+docker compose down
+Access the Application
 
 Frontend:
-npm install
-ng serve
+
+http://localhost:4200
+
+Backend API:
+
+http://localhost:5001
+
+PostgreSQL:
+
+Host: postgres
+Port: 5432
+
+(PostgreSQL is intended for internal Docker network communication and is accessed by the API container.)
