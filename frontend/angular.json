@@ -48,6 +48,14 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "docker": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.docker.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -60,6 +68,9 @@
             },
             "development": {
               "buildTarget": "eCommercePractice5:build:development"
+            },
+            "docker": {
+              "buildTarget": "eCommercePractice5:build:docker"
             }
           },
           "defaultConfiguration": "development"

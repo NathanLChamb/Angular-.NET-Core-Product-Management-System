@@ -18,6 +18,7 @@ services:
         condition: service_healthy
     environment:
       ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Production
       ConnectionStrings__DefaultConnectionString: Host=postgres;Port=5432;Database=ecommerce;Username=postgres;Password=postgres
 
   postgres:
