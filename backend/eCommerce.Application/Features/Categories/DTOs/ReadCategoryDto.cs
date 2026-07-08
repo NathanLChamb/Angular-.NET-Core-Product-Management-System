@@ -1,4 +1,4 @@
-﻿namespace eCommerce.Application.DTOs.Category
+﻿namespace eCommerce.Application.Features.Categories.DTOs
 {
     public class ReadCategoryDto
     {

@@ -1,14 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace eCommerce.Application.DTOs.Category
+namespace eCommerce.Application.Features.Categories.DTOs
 {
     public class UpdateCategoryDto
     {
-        [Required]
-        [StringLength(50)]
         public required string Name { get; set; }
-        [Required]
-        [StringLength(300)]
         public required string Description { get; set; }
     }
 }

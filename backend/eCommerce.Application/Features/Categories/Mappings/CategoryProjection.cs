@@ -1,7 +1,7 @@
-﻿using eCommerce.Application.DTOs.Category;
+﻿using eCommerce.Application.Features.Categories.DTOs;
 using eCommerce.Domain.Metadata;
 
-namespace eCommerce.Application.Mapping
+namespace eCommerce.Application.Features.Categories.Mappings
 {
     public static class CategoryProjection
     {

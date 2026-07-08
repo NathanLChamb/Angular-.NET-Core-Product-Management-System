@@ -1,6 +1,6 @@
-﻿using eCommerce.Application.DTOs.Category;
-using eCommerce.Application.DTOs.Option;
+﻿using eCommerce.Application.DTOs.Option;
 using eCommerce.Application.DTOs.Product;
+using eCommerce.Application.Features.Categories.DTOs;
 using eCommerce.Domain.Product;
 
 namespace eCommerce.Application.Mapping

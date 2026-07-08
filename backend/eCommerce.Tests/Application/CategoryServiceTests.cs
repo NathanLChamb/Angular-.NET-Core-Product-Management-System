@@ -1,4 +1,4 @@
-﻿using eCommerce.Application.DTOs.Category;
+﻿using eCommerce.Application.Features.Categories.DTOs;
 using eCommerce.Application.Services;
 using eCommerce.Application.Shared;
 using eCommerce.Domain.Metadata;

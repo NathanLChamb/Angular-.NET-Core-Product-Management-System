@@ -1,4 +1,4 @@
-﻿using eCommerce.Application.DTOs.Category;
+﻿using eCommerce.Application.Features.Categories.DTOs;
 
 namespace eCommerce.Application.DTOs.Product
 {

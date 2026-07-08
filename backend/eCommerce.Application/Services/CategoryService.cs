@@ -1,7 +1,7 @@
-﻿using eCommerce.Application.DTOs.Category;
-using eCommerce.Application.Exceptions;
+﻿using eCommerce.Application.Exceptions;
+using eCommerce.Application.Features.Categories.DTOs;
+using eCommerce.Application.Features.Categories.Mappings;
 using eCommerce.Application.Interfaces;
-using eCommerce.Application.Mapping;
 using eCommerce.Application.Shared;
 using eCommerce.Domain.Metadata;
 using Microsoft.EntityFrameworkCore;

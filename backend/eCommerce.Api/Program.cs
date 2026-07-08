@@ -1,4 +1,5 @@
 using eCommerce.Api.Middleware;
+using eCommerce.Application;
 using eCommerce.Application.Interfaces;
 using eCommerce.Application.Services;
 using eCommerce.Infrastructure.Persistence;
@@ -24,7 +25,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<eCommerceContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddApplication();
+
 builder.Services.AddScoped<IOptionService, OptionService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 

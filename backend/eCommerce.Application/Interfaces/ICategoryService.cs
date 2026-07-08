@@ -1,4 +1,4 @@
-﻿using eCommerce.Application.DTOs.Category;
+﻿using eCommerce.Application.Features.Categories.DTOs;
 using eCommerce.Application.Shared;
 
 namespace eCommerce.Application.Interfaces
