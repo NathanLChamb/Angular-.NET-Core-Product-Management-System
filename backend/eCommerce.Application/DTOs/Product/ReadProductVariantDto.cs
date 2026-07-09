@@ -1,4 +1,4 @@
-﻿using eCommerce.Application.DTOs.Option;
+﻿using eCommerce.Application.Features.Options.DTOs;
 
 namespace eCommerce.Application.DTOs.Product
 {

@@ -14,7 +14,7 @@ namespace eCommerce.Application.Features.Categories.Commands.DeleteCategory
 
         public async Task Handle(DeleteCategoryCommand request, CancellationToken ct)
         {
-            var category = await _context.Categories.FindAsync(request.Id);
+            var category = await _context.Categories.FindAsync(request.Id, ct);
             if (category == null) throw new NotFoundException("Category for deletion not found from provided ID");
 
             _context.Categories.Remove(category);

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace eCommerce.Application.Features.Categories.DTOs
+﻿namespace eCommerce.Application.Features.Categories.DTOs
 {
     public class UpdateCategoryDto
     {

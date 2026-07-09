@@ -14,7 +14,7 @@ namespace eCommerce.Application.Features.Categories.Commands.UpdateCategory
 
         public async Task Handle(UpdateCategoryCommand request, CancellationToken ct)
         {
-            var category = await _context.Categories.FindAsync(request.Id);
+            var category = await _context.Categories.FindAsync(request.Id, ct);
             if (category == null) throw new NotFoundException("Category for update not found from provided ID");
 
             category.Name = request.Name ?? category.Name;

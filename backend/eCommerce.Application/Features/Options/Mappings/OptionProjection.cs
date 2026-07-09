@@ -1,4 +1,4 @@
-﻿using eCommerce.Application.DTOs.Option;
+﻿using eCommerce.Application.Features.Options.DTOs;
 using eCommerce.Domain.Metadata;
 
 namespace eCommerce.Application.Mapping

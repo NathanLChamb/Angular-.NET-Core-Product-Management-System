@@ -1,4 +1,4 @@
-﻿namespace eCommerce.Application.DTOs.Option
+﻿namespace eCommerce.Application.Features.Options.DTOs
 {
     public class ReadOptionValueDto
     {

@@ -1,12 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace eCommerce.Application.DTOs.Option
+﻿namespace eCommerce.Application.Features.Options.DTOs
 {
     public class UpdateOptionValueDto
     {
         public int? Id { get; set; }
-        [Required]
-        [StringLength(50)]
         public required string Value { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using eCommerce.Application.DTOs.Option;
-using eCommerce.Application.Exceptions;
+﻿using eCommerce.Application.Exceptions;
+using eCommerce.Application.Features.Options.DTOs;
 using eCommerce.Application.Interfaces;
 using eCommerce.Application.Mapping;
 using eCommerce.Application.Shared;

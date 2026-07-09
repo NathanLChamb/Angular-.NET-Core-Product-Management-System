@@ -1,6 +1,11 @@
-﻿using eCommerce.Application.DTOs.Option;
-using eCommerce.Application.Interfaces;
+﻿using eCommerce.Application.Features.Options.Commands.CreateOption;
+using eCommerce.Application.Features.Options.Commands.DeleteOption;
+using eCommerce.Application.Features.Options.Commands.UpdateOption;
+using eCommerce.Application.Features.Options.DTOs;
+using eCommerce.Application.Features.Options.Queries.GetAllOptions;
+using eCommerce.Application.Features.Options.Queries.GetOptionById;
 using eCommerce.Application.Shared;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Api.Controllers
@@ -9,40 +14,40 @@ namespace eCommerce.Api.Controllers
     [Route("api/[controller]")]
     public class OptionController : ControllerBase
     {
-        private readonly IOptionService _optionService;
-        public OptionController(IOptionService optionService)
+        private readonly IMediator _mediator;
+        public OptionController(IMediator mediator)
         {
-            _optionService = optionService;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<ActionResult<PagedResult<ReadOptionDto>>> GetAllOptions([FromQuery]PaginationParams pageParams)
         {
-            var options = await _optionService.GetAllOptionsAsync(pageParams);
+            var options = await _mediator.Send(new GetAllOptionsQuery(pageParams));
             return Ok(options);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<ReadOptionDto>> GetOptionById(int id)
         {
-            var option = await _optionService.GetOptionByIdAsync(id);
+            var option = await _mediator.Send(new GetOptionByIdQuery(id));
             return Ok(option);
         }
         [HttpPost]
         public async Task<ActionResult<ReadOptionDto>> CreateOption([FromBody]CreateOptionDto dto)
         {
-            var option = await _optionService.CreateOptionAsync(dto);
+            var option = await _mediator.Send(new CreateOptionCommand(dto.Name, dto.OptionValues));
             return CreatedAtAction(nameof(GetOptionById), new { id = option.Id }, option);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateOption(int id, UpdateOptionDto dto)
         {
-            await _optionService.UpdateOptionAsync(id, dto);
+            await _mediator.Send(new UpdateOptionCommand(id, dto.Name, dto.OptionValues));
             return NoContent();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOption(int id)
         {
-            await _optionService.DeleteOptionAsync(id);
+            await _mediator.Send(new DeleteOptionCommand(id));
             return NoContent();
         }
     }
