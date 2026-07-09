@@ -1,9 +1,9 @@
-﻿using eCommerce.Application.DTOs.Product;
-using eCommerce.Application.Features.Categories.DTOs;
+﻿using eCommerce.Application.Features.Categories.DTOs;
 using eCommerce.Application.Features.Options.DTOs;
+using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Domain.Product;
 
-namespace eCommerce.Application.Mapping
+namespace eCommerce.Application.Features.Products.Mappings
 {
     public static class ProductProjection
     {

@@ -1,7 +1,7 @@
-﻿using eCommerce.Application.DTOs.Product;
-using eCommerce.Application.Exceptions;
+﻿using eCommerce.Application.Exceptions;
+using eCommerce.Application.Features.Products.DTOs;
+using eCommerce.Application.Features.Products.Mappings;
 using eCommerce.Application.Interfaces;
-using eCommerce.Application.Mapping;
 using eCommerce.Application.Shared;
 using eCommerce.Domain.Product;
 using Microsoft.EntityFrameworkCore;

@@ -1,6 +1,6 @@
 ﻿using eCommerce.Application.Features.Categories.DTOs;
 
-namespace eCommerce.Application.DTOs.Product
+namespace eCommerce.Application.Features.Products.DTOs
 {
     public class ReadProductDto
     {

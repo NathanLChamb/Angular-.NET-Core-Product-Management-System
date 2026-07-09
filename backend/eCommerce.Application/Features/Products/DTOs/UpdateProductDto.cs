@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace eCommerce.Application.DTOs.Product
+namespace eCommerce.Application.Features.Products.DTOs
 {
-    public class CreateProductDto
+    public class UpdateProductDto
     {
         [Required]
         [StringLength(50)]
@@ -18,6 +18,6 @@ namespace eCommerce.Application.DTOs.Product
         public List<int> OptionIds { get; set; } = new();
         [Required]
         [MinLength(1)]
-        public List<CreateProductVariantDto> ProductVariants { get; set; } = new();
+        public List<UpdateProductVariantDto> ProductVariants { get; set; } = new();
     }
 }

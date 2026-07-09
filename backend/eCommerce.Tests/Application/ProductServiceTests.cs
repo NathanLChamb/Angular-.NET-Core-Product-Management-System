@@ -1,4 +1,4 @@
-﻿using eCommerce.Application.DTOs.Product;
+﻿using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Application.Services;
 using eCommerce.Tests.Infrastructure;
 using FluentAssertions;

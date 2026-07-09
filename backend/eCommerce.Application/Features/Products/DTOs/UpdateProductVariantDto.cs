@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace eCommerce.Application.DTOs.Product
+namespace eCommerce.Application.Features.Products.DTOs
 {
     public class UpdateProductVariantDto
     {
