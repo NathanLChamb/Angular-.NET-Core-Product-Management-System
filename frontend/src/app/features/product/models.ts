@@ -56,3 +56,19 @@ export interface UpdateProductVariantDto {
     stockQuantity: number;
     optionValueIds: number[];
 }
+
+export interface ProductSearchFilter {
+    search?: string;
+    categoryIds: number[];
+    optionIds: number[];
+    sort: ProductSort;
+    pageNumber: number;
+    pageSize: number;
+}
+
+export enum ProductSort {
+  Default = 0,
+  PriceAscending = 1,
+  PriceDescending = 2,
+  Newest = 3
+}

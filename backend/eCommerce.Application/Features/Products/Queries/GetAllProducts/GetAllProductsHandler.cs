@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using eCommerce.Application.Features.Products.DTOs;
+﻿using eCommerce.Application.Features.Products.DTOs;
+using eCommerce.Application.Features.Products.Filters;
 using eCommerce.Application.Features.Products.Mappings;
 using eCommerce.Application.Interfaces;
 using eCommerce.Application.Shared;
@@ -19,16 +18,51 @@ namespace eCommerce.Application.Features.Products.Queries.GetAllProducts
 
         public async Task<PagedResult<ReadProductDto>> Handle(GetAllProductsQuery request, CancellationToken ct)
         {
-            var query = _context.Products
+            var productsQuery = _context.Products
                 .AsNoTracking()
-                .OrderBy(p => p.Id);
+                .AsQueryable();
 
-            var totalCount = await query
+            if (!string.IsNullOrWhiteSpace(request.Filter.Search))
+            {
+                productsQuery = productsQuery.Where(p =>
+                    p.Name.Contains(request.Filter.Search));
+            }
+
+            if (request.Filter.CategoryIds.Any())
+            {
+                productsQuery = productsQuery.Where(p =>
+                    p.ProductCategories.Any(pc =>
+                        request.Filter.CategoryIds.Contains(pc.CategoryId)));
+            }
+
+            if (request.Filter.OptionIds.Any())
+            {
+                productsQuery = productsQuery.Where(p =>
+                    request.Filter.OptionIds.All(optionId =>
+                        p.ProductOptions.Any(po =>
+                            po.OptionId == optionId)));
+            }
+
+            productsQuery = request.Filter.Sort switch
+            {
+                ProductSort.PriceAscending => productsQuery.OrderBy(
+                    p => p.ProductVariants.Min(v => v.Price)),
+
+                ProductSort.PriceDescending => productsQuery.OrderByDescending(
+                    p => p.ProductVariants.Max(v => v.Price)),
+
+                ProductSort.Newest => productsQuery.OrderByDescending(
+                    p => p.CreatedAt),
+
+                _ => productsQuery.OrderBy(p => p.Id)
+            };
+
+            var totalCount = await productsQuery
                 .CountAsync(ct);
 
-            var products = await query
-                .Skip((request.PageParams.PageNumber - 1) * request.PageParams.PageSize)
-                .Take(request.PageParams.PageSize)
+            var products = await productsQuery
+                .Skip((request.Filter.PageNumber - 1) * request.Filter.PageSize)
+                .Take(request.Filter.PageSize)
                 .ToProductDto()
                 .ToListAsync(ct);
 
@@ -36,8 +70,8 @@ namespace eCommerce.Application.Features.Products.Queries.GetAllProducts
             {
                 Items = products,
                 TotalCount = totalCount,
-                PageNumber = request.PageParams.PageNumber,
-                PageSize = request.PageParams.PageSize
+                PageNumber = request.Filter.PageNumber,
+                PageSize = request.Filter.PageSize
             };
         }
     }

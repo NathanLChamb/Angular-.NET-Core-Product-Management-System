@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { Environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { PaginationParams } from '../../shared/models/pagination-params';
 import { Observable } from 'rxjs';
 import { PagedResult } from '../../shared/models/paged-result';
-import { CreateProductDto, ReadProductDto, UpdateProductDto } from './models';
+import { CreateProductDto, ProductSearchFilter, ReadProductDto, UpdateProductDto } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +12,14 @@ export class ProductService {
   private apiUrl = `${Environment.apiBaseUrl}/product`
   private http = inject(HttpClient)
 
-  public GetAllProducts(params: PaginationParams): Observable<PagedResult<ReadProductDto>> {
+  public GetAllProducts(params: ProductSearchFilter): Observable<PagedResult<ReadProductDto>> {
+    console.log('service received:', params);
     return this.http.get<PagedResult<ReadProductDto>>(this.apiUrl, {
       params: {
+        search: params.search ?? '',
+        CategoryIds: params.categoryIds,
+        OptionIds: params.optionIds,
+        Sort: params.sort,
         pageNumber: params.pageNumber,
         pageSize: params.pageSize
       }

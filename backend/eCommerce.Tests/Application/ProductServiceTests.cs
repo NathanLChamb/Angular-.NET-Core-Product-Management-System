@@ -1,7 +1,12 @@
-﻿using eCommerce.Application.Features.Products.DTOs;
-using eCommerce.Application.Services;
+﻿using eCommerce.Application.Features.Products.Commands.CreateProduct;
+using eCommerce.Application.Features.Products.Commands.UpdateProduct;
+using eCommerce.Application.Features.Products.DTOs;
+using eCommerce.Application.Features.Products.Queries.GetProductById;
+using eCommerce.Infrastructure.Persistence;
 using eCommerce.Tests.Infrastructure;
 using FluentAssertions;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace eCommerce.Tests.Application
 {
@@ -20,8 +25,9 @@ namespace eCommerce.Tests.Application
         {
             await _fixture.ResetDatabase();
 
-            using var context = _fixture.CreateDbContext();
-            var service = new ProductService(context);
+            using var scope = _fixture.Services.CreateScope();
+            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            var context = scope.ServiceProvider.GetRequiredService<eCommerceContext>();
 
             var dto = new CreateProductDto
             {
@@ -41,7 +47,7 @@ namespace eCommerce.Tests.Application
                 }
             };
 
-            var result = await service.CreateProductAsync(dto);
+            var result = await mediator.Send(new CreateProductCommand(dto.Name, dto.Description, dto.CategoryIds, dto.OptionIds, dto.ProductVariants));
 
             result.Should().NotBeNull();
             result.Id.Should().BeGreaterThan(0);
@@ -53,31 +59,31 @@ namespace eCommerce.Tests.Application
         {
             await _fixture.ResetDatabase();
 
-            using var context = _fixture.CreateDbContext();
-            var service = new ProductService(context);
+            using var scope = _fixture.Services.CreateScope();
+            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            var context = scope.ServiceProvider.GetRequiredService<eCommerceContext>();
 
-            var created = await service.CreateProductAsync(new CreateProductDto
-            {
-                Name = "Laptop",
-                Description = "Gaming Laptop",
-                CategoryIds = new(),
-                OptionIds = new(),
-                ProductVariants = new List<CreateProductVariantDto>
+            var created = await mediator.Send(new CreateProductCommand(
+                "Laptop",
+                "Gaming Laptop",
+                new(),
+                new(),
+                new List<CreateProductVariantDto>
                 {
                     new() { Sku = "LAP-1", Price = 1000, StockQuantity = 5, OptionValueIds = new() },
                     new() { Sku = "LAP-2", Price = 1200, StockQuantity = 3, OptionValueIds = new() }
-                }
-            });
+                })
+            );
 
-            var product = await service.GetProductByIdAsync(created.Id);
+            var product = await mediator.Send(new GetProductByIdQuery(created.Id));
 
-            await service.UpdateProductAsync(created.Id, new UpdateProductDto
-            {
-                Name = "Laptop",
-                Description = "Gaming Laptop",
-                CategoryIds = new(),
-                OptionIds = new(),
-                ProductVariants = new List<UpdateProductVariantDto>
+            await mediator.Send(new UpdateProductCommand(
+                created.Id,
+                "Laptop",
+                "Gaming Laptop",
+                new(),
+                new(),
+                new List<UpdateProductVariantDto>
                 {
                     new()
                     {
@@ -87,10 +93,10 @@ namespace eCommerce.Tests.Application
                         StockQuantity = 5,
                         OptionValueIds = new()
                     }
-                }
-            });
+                })
+            );
 
-            var updated = await service.GetProductByIdAsync(created.Id);
+            var updated = await mediator.Send(new GetProductByIdQuery(created.Id));
 
             updated!.ProductVariants.Should().HaveCount(1);
         }
@@ -100,16 +106,16 @@ namespace eCommerce.Tests.Application
         {
             await _fixture.ResetDatabase();
 
-            using var context = _fixture.CreateDbContext();
-            var service = new ProductService(context);
+            using var scope = _fixture.Services.CreateScope();
+            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            var context = scope.ServiceProvider.GetRequiredService<eCommerceContext>();
 
-            var created = await service.CreateProductAsync(new CreateProductDto
-            {
-                Name = "Tablet",
-                Description = "iPad",
-                CategoryIds = new(),
-                OptionIds = new(),
-                ProductVariants = new List<CreateProductVariantDto>
+            var created = await mediator.Send(new CreateProductCommand(
+                "Tablet",
+                "iPad",
+                new(),
+                new(),
+                new List<CreateProductVariantDto>
                 {
                     new()
                     {
@@ -118,19 +124,19 @@ namespace eCommerce.Tests.Application
                         StockQuantity = 10,
                         OptionValueIds = new()
                     }
-                }
-            });
+                })
+            );
 
-            var product = await service.GetProductByIdAsync(created.Id);
+            var product = await mediator.Send(new GetProductByIdQuery(created.Id));
             var variant = product!.ProductVariants.First();
 
-            await service.UpdateProductAsync(created.Id, new UpdateProductDto
-            {
-                Name = "Tablet",
-                Description = "iPad",
-                CategoryIds = new(),
-                OptionIds = new(),
-                ProductVariants = new List<UpdateProductVariantDto>
+            await mediator.Send(new UpdateProductCommand(
+                created.Id,
+                "Tablet",
+                "iPad",
+                new(),
+                new(),
+                new List<UpdateProductVariantDto>
                 {
                     new()
                     {
@@ -140,16 +146,39 @@ namespace eCommerce.Tests.Application
                         StockQuantity = 7,
                         OptionValueIds = new()
                     }
-                }
-            });
+                })
+            );
 
-            var updated = await service.GetProductByIdAsync(created.Id);
+            var updated = await mediator.Send(new GetProductByIdQuery(created.Id));
 
             var updatedVariant = updated!.ProductVariants.First();
 
             updatedVariant.Sku.Should().Be("TAB-UPDATED");
             updatedVariant.Price.Should().Be(650);
             updatedVariant.StockQuantity.Should().Be(7);
+        }
+
+        [Fact]
+        public async Task CreateProduct_WithInvalidCategory_ShouldFail()
+        {
+        }
+
+        [Fact]
+        public async Task CreateProduct_WithInvalidOptionValue_ShouldFail()
+        {
+
+        }
+
+        [Fact]
+        public async Task CreateProduct_WithDuplicateSku_ShouldFail()
+        {
+
+        }
+
+        [Fact]
+        public async Task UpdateProduct_WithInvalidVariant_ShouldFail()
+        {
+
         }
     }
 }

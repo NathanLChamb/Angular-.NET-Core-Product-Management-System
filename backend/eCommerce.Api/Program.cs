@@ -1,7 +1,6 @@
 using eCommerce.Api.Middleware;
 using eCommerce.Application;
 using eCommerce.Application.Interfaces;
-using eCommerce.Application.Services;
 using eCommerce.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,9 +25,6 @@ builder.Services.AddDbContext<eCommerceContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
 builder.Services.AddApplication();
-
-builder.Services.AddScoped<IOptionService, OptionService>();
-builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddScoped<IeCommerceContext>(provider =>
     provider.GetRequiredService<eCommerceContext>());

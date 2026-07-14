@@ -1,17 +1,22 @@
-﻿using eCommerce.Application.Features.Categories.DTOs;
-using eCommerce.Application.Services;
+﻿using eCommerce.Application.Features.Categories.Commands.CreateCategory;
+using eCommerce.Application.Features.Categories.DTOs;
+using eCommerce.Application.Features.Categories.Queries.GetAllCategories;
+using eCommerce.Application.Features.Categories.Queries.GetCategoryById;
 using eCommerce.Application.Shared;
 using eCommerce.Domain.Metadata;
+using eCommerce.Infrastructure.Persistence;
 using eCommerce.Tests.Infrastructure;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace eCommerce.Tests.Application
 {
     [Collection("Database Collection")]
-    public class CategoryServiceTests
+    public class CategoryFeatureTests
     {
         private readonly PostgresContainerFixture _fixture;
 
-        public CategoryServiceTests(PostgresContainerFixture fixture)
+        public CategoryFeatureTests(PostgresContainerFixture fixture)
         {
             _fixture = fixture;
         }
@@ -21,8 +26,9 @@ namespace eCommerce.Tests.Application
         {
             await _fixture.ResetDatabase();
 
-            using var context = _fixture.CreateDbContext();
-            var service = new CategoryService(context);
+            using var scope = _fixture.Services.CreateScope();
+            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            var context = scope.ServiceProvider.GetRequiredService<eCommerceContext>();
 
             var categories = new List<Category>
             {
@@ -46,7 +52,7 @@ namespace eCommerce.Tests.Application
                 PageSize = 1
             };
 
-            var result = await service.GetAllCategoriesAsync(pageParams);
+            var result = await mediator.Send(new GetAllCategoriesQuery(pageParams));
 
             Assert.NotNull(result);
 
@@ -66,8 +72,9 @@ namespace eCommerce.Tests.Application
         {
             await _fixture.ResetDatabase();
 
-            using var context = _fixture.CreateDbContext();
-            var service = new CategoryService(context);
+            using var scope = _fixture.Services.CreateScope();
+            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            var context = scope.ServiceProvider.GetRequiredService<eCommerceContext>();
 
             var category = new Category
             {
@@ -77,7 +84,7 @@ namespace eCommerce.Tests.Application
             context.Categories.Add(category);
             await context.SaveChangesAsync();
 
-            var result = await service.GetCategoryByIdAsync(category.Id);
+            var result = await mediator.Send(new GetCategoryByIdQuery(category.Id));
 
             Assert.NotNull(result);
 
@@ -91,8 +98,9 @@ namespace eCommerce.Tests.Application
         {
             await _fixture.ResetDatabase();
 
-            using var context = _fixture.CreateDbContext();
-            var service = new CategoryService(context);
+            using var scope = _fixture.Services.CreateScope();
+            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            var context = scope.ServiceProvider.GetRequiredService<eCommerceContext>();
 
             var dto = new CreateCategoryDto
             {
@@ -100,7 +108,7 @@ namespace eCommerce.Tests.Application
                 Description = "Test Description"
             };
 
-            var result = await service.CreateCategoryAsync(dto);
+            var result = await mediator.Send(new CreateCategoryCommand(dto.Name, dto.Description));
 
             Assert.NotNull(result);
             Assert.Equal(dto.Name, result.Name);

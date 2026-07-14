@@ -3,6 +3,7 @@ import { ProductService } from '../product-service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { ProductSearchFilter, ProductSort } from '../models';
 
 
 @Component({
@@ -13,15 +14,19 @@ import { DatePipe } from '@angular/common';
 })
 export class ProductList {
   private productService = inject(ProductService)
-  protected pageNumber = signal(1)
-  protected pageSize = signal(5)
+  protected ProductSort = ProductSort;
+  protected filter = signal<ProductSearchFilter>({
+  search: '',
+  categoryIds: [],
+  optionIds: [],
+  sort: ProductSort.Default,
+  pageNumber: 1,
+  pageSize: 5
+})
   expandedProductIds = new Set<number>()
 
   protected products = rxResource({
-    params: () => ({
-      pageNumber: this.pageNumber(),
-      pageSize: this.pageSize()
-    }),
+    params: () => this.filter(),
     stream: ({params}) => this.productService.GetAllProducts(params)
   })
 
@@ -29,7 +34,7 @@ export class ProductList {
     const data = this.products.value()
     if (!data) return 0
 
-    return Math.ceil(data.totalCount / this.pageSize())
+    return Math.ceil(data.totalCount / this.filter().pageSize)
   })
 
   protected toggle(productId: number) {
@@ -44,16 +49,34 @@ export class ProductList {
     return this.expandedProductIds.has(productId)
   }
 
+  protected updateSearch(search: string) {
+    this.filter.update(f => ({
+      ...f,
+      search,
+      pageNumber: 1
+    }));
+  }
+
+  protected updateSort(sort: ProductSort) {
+    this.filter.update(f => ({
+      ...f,
+      sort,
+      pageNumber: 1
+    }));
+  }
+
   protected previousPage() {
-    if (this.pageNumber() > 1) {
-      this.pageNumber.update(p => p - 1)
-    }
+    this.filter.update(f => ({
+      ...f,
+      pageNumber: Math.max(1, f.pageNumber - 1)
+    })) 
   }
 
   protected nextPage() {
-    if (this.pageNumber() < this.totalPages()) {
-      this.pageNumber.update(p => p + 1)
-    }
+    this.filter.update(f => ({
+      ...f,
+      pageNumber: f.pageNumber + 1
+    }))
   }
 
   handleDelete(id: number) {

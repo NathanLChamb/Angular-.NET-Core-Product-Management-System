@@ -1,5 +1,9 @@
-﻿using eCommerce.Infrastructure.Persistence;
+﻿using eCommerce.Application.Features.Categories.Commands.CreateCategory;
+using eCommerce.Application.Interfaces;
+using eCommerce.Infrastructure.Persistence;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using Respawn;
 using System.Data.Common;
@@ -19,6 +23,7 @@ namespace eCommerce.Tests.Infrastructure
         private DbConnection _connection = null!;
         private Respawner _respawner = null!;
         private DbContextOptions<eCommerceContext> _options = null!;
+        public IServiceProvider Services { get; private set; } = null!;
 
         public string ConnectionString => _container.GetConnectionString();
 
@@ -30,13 +35,27 @@ namespace eCommerce.Tests.Infrastructure
                 .UseNpgsql(ConnectionString)
                 .Options;
 
+            var services = new ServiceCollection();
+
+            services.AddDbContext<eCommerceContext>(options =>
+                options.UseNpgsql(ConnectionString));
+
+            services.AddScoped<IeCommerceContext>(sp =>
+                sp.GetRequiredService<eCommerceContext>());
+
+            services.AddMediatR(cfg =>
+                cfg.RegisterServicesFromAssembly(typeof(CreateCategoryCommand).Assembly));
+
+            Services = services.BuildServiceProvider();
+
             _connection = new NpgsqlConnection(ConnectionString);
             await _connection.OpenAsync();
 
-            await using (var context = CreateDbContext())
-            {
-                await context.Database.MigrateAsync();
-            }
+            using var scope = Services.CreateScope();
+
+            var context = scope.ServiceProvider.GetRequiredService<eCommerceContext>();
+
+            await context.Database.MigrateAsync();
 
             _respawner = await Respawner.CreateAsync(_connection, new RespawnerOptions
             {

@@ -2,6 +2,7 @@
 using eCommerce.Application.Features.Products.Commands.DeleteProduct;
 using eCommerce.Application.Features.Products.Commands.UpdateProduct;
 using eCommerce.Application.Features.Products.DTOs;
+using eCommerce.Application.Features.Products.Filters;
 using eCommerce.Application.Features.Products.Queries.GetAllProducts;
 using eCommerce.Application.Features.Products.Queries.GetProductById;
 using eCommerce.Application.Shared;
@@ -21,9 +22,9 @@ namespace eCommerce.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResult<ReadProductDto>>> GetAllProducts([FromQuery] PaginationParams pageParams)
+        public async Task<ActionResult<PagedResult<ReadProductDto>>> GetAllProducts([FromQuery] ProductSearchFilter filter)
         {
-            var products = await _mediator.Send(new GetAllProductsQuery(pageParams));
+            var products = await _mediator.Send(new GetAllProductsQuery(filter));
             return Ok(products);
         }
         [HttpGet("{id}")]
