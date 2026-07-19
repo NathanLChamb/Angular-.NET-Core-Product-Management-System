@@ -9,7 +9,6 @@ namespace eCommerce.Application.Interfaces
         DbSet<Product> Products { get; }
         DbSet<Category> Categories { get; }
         DbSet<Option> Options { get; }
-
         DbSet<ProductVariant> ProductVariants { get; }
         DbSet<OptionValue> OptionValues { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

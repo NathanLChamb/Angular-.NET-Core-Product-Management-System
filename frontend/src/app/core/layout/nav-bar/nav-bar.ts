@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../auth/auth-service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,5 +9,9 @@ import { RouterLink } from '@angular/router';
   styleUrl: './nav-bar.css',
 })
 export class NavBar {
+  authService = inject(AuthService);
 
+  logout(): void {
+    this.authService.logout();
+  }
 }

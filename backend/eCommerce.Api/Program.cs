@@ -1,6 +1,7 @@
 using eCommerce.Api.Middleware;
 using eCommerce.Application;
 using eCommerce.Application.Interfaces;
+using eCommerce.Infrastructure.Identity;
 using eCommerce.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,15 +22,23 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddDbContext<eCommerceContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString")));
-
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
 builder.Services.AddScoped<IeCommerceContext>(provider =>
     provider.GetRequiredService<eCommerceContext>());
 
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder =
+        scope.ServiceProvider
+            .GetRequiredService<IdentitySeeder>();
+
+    await seeder.SeedAsync();
+}
 
 app.UseCors();
 
@@ -49,6 +58,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
+app.UseAuthentication();
 
 app.UseAuthorization();
 

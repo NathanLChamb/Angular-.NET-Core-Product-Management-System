@@ -155,3 +155,19 @@ Host: postgres
 Port: 5432
 
 (PostgreSQL is intended for internal Docker network communication and is accessed by the API container.)
+
+## Demo Accounts
+
+Admin:
+- Email: admin@ecommerce.com
+- Password: Admin123!
+
+Customer:
+- Email: test@example.com
+- Password: Customer123!
+
+Features:
+- Customer registration and authentication
+- Product management for administrators
+- Role-based authorization
+- Dynamic product variants

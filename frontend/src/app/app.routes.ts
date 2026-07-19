@@ -4,6 +4,12 @@ export const routes: Routes = [
     {path: '', loadChildren: () =>
         import('./features/category/category.routes').then((m) => m.CategoryRoutes)
     },
+    {path: 'register', loadChildren: () =>
+        import('./features/auth/register.routes').then((m) => m.RegisterRoutes)
+    },
+    {path: 'login', loadChildren: () =>
+        import('./features/auth/login.routes').then((m) => m.LoginRoutes)
+    },
     {path: 'category', loadChildren: () =>
         import('./features/category/category.routes').then((m) => m.CategoryRoutes)
     },
@@ -12,5 +18,6 @@ export const routes: Routes = [
     },
     {path: 'product', loadChildren: () =>
         import('./features/product/product.routes').then((m) => m.ProductRoutes)
-    }
+    },
+    {path: '**', redirectTo: 'login'}
 ];

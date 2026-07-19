@@ -1,0 +1,45 @@
+<div class="login-container">
+
+  <h1>Login</h1>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <div>
+      <label>Email</label>
+      <input
+        type="email"
+        formControlName="email">
+    </div>
+
+
+    <div>
+      <label>Password</label>
+      <input
+        type="password"
+        formControlName="password">
+    </div>
+
+
+    @if (errorMessage) {
+      <p class="error">
+        {{ errorMessage }}
+      </p>
+    }
+
+
+    <button
+      type="submit"
+      [disabled]="loginForm.invalid">
+      Login
+    </button>
+
+  </form>
+
+</div>
+
+<h3>Demo Access</h3>
+<p>Use the demo accounts below:</p>
+<p>- Customer account — view storefront features</p>
+<p>- Admin account — manage products and options</p>
+<br>
+<p>Credentials are available in the project README.</p>
