@@ -1,4 +1,5 @@
 ﻿using eCommerce.Application.Exceptions;
+using eCommerce.Application.Features.Products.Interfaces;
 using eCommerce.Application.Interfaces;
 using eCommerce.Domain.Product;
 using MediatR;
@@ -9,13 +10,23 @@ namespace eCommerce.Application.Features.Products.Commands.UpdateProduct
     public class UpdateProductHandler : IRequestHandler<UpdateProductCommand>
     {
         private readonly IeCommerceContext _context;
-        public UpdateProductHandler(IeCommerceContext context)
+        private readonly IProductValidationService _validationService;
+        public UpdateProductHandler(IeCommerceContext context, IProductValidationService validationService)
         {
             _context = context;
+            _validationService = validationService;
         }
 
         public async Task Handle(UpdateProductCommand request, CancellationToken ct)
         {
+            await _validationService.ValidateCategoriesAsync(request.CategoryIds, ct);
+            await _validationService.ValidateOptionsAsync(request.OptionIds, ct);
+            var optionValueIds = request.ProductVariants
+                .SelectMany(v => v.OptionValueIds)
+                .ToList();
+            await _validationService.ValidateOptionValuesAsync(optionValueIds, ct);
+            await _validationService.ValidateOptionValuesBelongToOptionsAsync(request.OptionIds, optionValueIds, ct);
+
             var product = await _context.Products
                 .Include(p => p.ProductCategories)
                 .Include(p => p.ProductOptions)

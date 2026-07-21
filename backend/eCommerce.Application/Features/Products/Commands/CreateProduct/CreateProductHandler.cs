@@ -1,4 +1,5 @@
 ﻿using eCommerce.Application.Features.Products.DTOs;
+using eCommerce.Application.Features.Products.Interfaces;
 using eCommerce.Application.Features.Products.Mappings;
 using eCommerce.Application.Interfaces;
 using eCommerce.Domain.Product;
@@ -10,12 +11,22 @@ namespace eCommerce.Application.Features.Products.Commands.CreateProduct
     public class CreateProductHandler : IRequestHandler<CreateProductCommand, ReadProductDto>
     {
         private readonly IeCommerceContext _context;
-        public CreateProductHandler(IeCommerceContext context)
+        private readonly IProductValidationService _validationService;
+        public CreateProductHandler(IeCommerceContext context, IProductValidationService validationService)
         {
             _context = context;
+            _validationService = validationService;
         }
         public async Task<ReadProductDto> Handle(CreateProductCommand request, CancellationToken ct)
         {
+            await _validationService.ValidateCategoriesAsync(request.CategoryIds, ct);
+            await _validationService.ValidateOptionsAsync(request.OptionIds, ct);
+            var optionValueIds = request.ProductVariants
+                .SelectMany(v => v.OptionValueIds)
+                .ToList();
+            await _validationService.ValidateOptionValuesAsync(optionValueIds, ct);
+            await _validationService.ValidateOptionValuesBelongToOptionsAsync(request.OptionIds, optionValueIds, ct);
+
             var newProduct = new Product
             {
                 Name = request.Name,

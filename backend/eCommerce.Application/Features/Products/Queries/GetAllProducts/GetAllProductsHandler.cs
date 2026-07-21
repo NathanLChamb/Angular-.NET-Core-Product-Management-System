@@ -25,7 +25,7 @@ namespace eCommerce.Application.Features.Products.Queries.GetAllProducts
             if (!string.IsNullOrWhiteSpace(request.Filter.Search))
             {
                 productsQuery = productsQuery.Where(p =>
-                    p.Name.Contains(request.Filter.Search));
+                    p.Name.ToLower().Contains(request.Filter.Search.ToLower()));
             }
 
             if (request.Filter.CategoryIds.Any())
@@ -41,6 +41,29 @@ namespace eCommerce.Application.Features.Products.Queries.GetAllProducts
                     request.Filter.OptionIds.All(optionId =>
                         p.ProductOptions.Any(po =>
                             po.OptionId == optionId)));
+            }
+
+            if (request.Filter.OptionValueIds.Any())
+            {
+                productsQuery = productsQuery.Where(p =>
+                    p.ProductVariants.Any(v =>
+                        request.Filter.OptionValueIds.All(valueId =>
+                            v.ProductVariantOptionValues.Any(x =>
+                                x.OptionValueId == valueId))));
+            }
+
+            if (request.Filter.MinPrice.HasValue)
+            {
+                productsQuery = productsQuery.Where(p =>
+                    p.ProductVariants.Any(v =>
+                       v.Price >= request.Filter.MinPrice));
+            }
+
+            if (request.Filter.MaxPrice.HasValue)
+            {
+                productsQuery = productsQuery.Where(p =>
+                    p.ProductVariants.Any(v =>
+                       v.Price <= request.Filter.MaxPrice));
             }
 
             productsQuery = request.Filter.Sort switch
