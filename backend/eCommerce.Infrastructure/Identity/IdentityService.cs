@@ -8,39 +8,21 @@ public class IdentityService : IIdentityService
 {
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public IdentityService(
-        UserManager<ApplicationUser> userManager)
+    public IdentityService(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
     }
-
-
-    public async Task<TokenUser?> LoginAsync(
-        string email,
-        string password)
+    public async Task<TokenUser?> LoginAsync(string email, string password)
     {
         email = email.Trim().ToLowerInvariant();
 
-        var user =
-            await _userManager.FindByEmailAsync(email);
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null) return null;
 
-        if (user == null)
-            return null;
+        var validPassword = await _userManager.CheckPasswordAsync(user, password);
+        if (!validPassword) return null;
 
-
-        var validPassword =
-            await _userManager.CheckPasswordAsync(
-                user,
-                password);
-
-
-        if (!validPassword)
-            return null;
-
-
-        var roles =
-            await _userManager.GetRolesAsync(user);
-
+        var roles = await _userManager.GetRolesAsync(user);
 
         return new TokenUser
         {
@@ -50,7 +32,6 @@ public class IdentityService : IIdentityService
             Roles = roles
         };
     }
-
 
     public async Task<TokenUser> RegisterAsync(string email, string password, string displayName)
     {

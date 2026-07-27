@@ -1,20 +1,20 @@
 <section class="nav-bar">
     <nav class="main-nav">
         <ul class="nav-links">
-            <li><a routerLink="/">CATEGORIES</a></li>
-            <li><a routerLink="/option">OPTIONS</a></li>
-            <li><a routerLink="/product">PRODUCTS</a></li>
-            @if(authService.isAdmin()) {
-                <li><a routerLink="/admin">ADMIN</a></li>
-            }
+            <li><a routerLink="/">HOME</a></li>
+           
             @if (authService.isAuthenticated()) {
-
+                
+                <li><a routerLink="/category">CATEGORIES</a></li>
+                <li><a routerLink="/option">OPTIONS</a></li>
+                 <li><a routerLink="/product">PRODUCTS</a></li>
                 <li class="welcome">
                     Welcome, {{ authService.user()?.displayName }}
                 </li>
                 <li>
                     <button type="button" (click)="logout()">LOGOUT</button>
                 </li>
+                <li><a routerLink="/cart">CART</a></li>
 
             } @else {
                 <li><a routerLink="/login">LOGIN</a></li>

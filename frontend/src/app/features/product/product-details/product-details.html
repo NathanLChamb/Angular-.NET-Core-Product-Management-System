@@ -1,0 +1,37 @@
+@if (product.error()) {
+    <p>Products retrieval error</p>
+}
+
+@if (product.isLoading()) {
+            <tr>
+                <td colspan="9">Loading...</td>
+            </tr>
+        }
+        @if (product.value(); as result) {
+            <h1>{{result.name}}</h1>
+            <p>{{result.description}}</p>
+
+            <h2>Select an option</h2>
+
+            @for (variant of result.productVariants; track variant.id) {
+                <div>
+                    <p>SKU: {{ variant.sku }}</p>
+
+                    <p>Price: {{ variant.price }}</p>
+
+                    <p>
+                        Options:
+                        @for (option of variant.optionValues; track option.id) {
+                        {{ option.value }}
+                        }
+                    </p>
+
+                    <button (click)="addToCart(variant.id)">
+                        Add to Cart
+                    </button>
+                </div>
+            }
+}
+    
+
+

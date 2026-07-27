@@ -9,6 +9,6 @@
         public required string ProductName { get; set; }
         public required string Sku { get; set; }
         public decimal PriceAtPurchase { get; set; }
-        public decimal Quantity { get; set; }
+        public int Quantity { get; set; }
     }
 }

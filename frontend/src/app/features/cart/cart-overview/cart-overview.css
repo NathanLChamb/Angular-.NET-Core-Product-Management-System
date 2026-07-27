@@ -1,0 +1,24 @@
+.cart-items {
+    display: grid;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    flex-direction: column;
+}
+
+.cart-item > * {
+    padding: 0px;
+    margin: 0px;
+}
+.cart-item > .option-values {
+    display: flex;
+    flex-direction: row;
+}
+
+.option-values > * {
+    padding: 0px;
+    margin: 0px;
+}

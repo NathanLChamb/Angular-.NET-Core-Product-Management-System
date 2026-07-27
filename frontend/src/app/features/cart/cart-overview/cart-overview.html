@@ -1,0 +1,49 @@
+<h1>Shopping Cart</h1>
+@if (cart.error()) {
+    <p>There was an error loading your cart.</p>
+}
+
+@if (cart.isLoading()) {
+    <p>Loading cart...</p>
+}
+
+@if (cart.value(); as currentCart) {
+    <section class="cart">
+        
+        @if (currentCart.items.length === 0) {
+            <p>Your cart is empty.</p>
+        }
+        <div class="image"></div>
+        <ul class="cart-items"> 
+            @for (item of currentCart.items; track item.productVariantId) { 
+                <li class="cart-item"> 
+                    <p class="tag">{{ item.productName }}</p> 
+                    <p class="tag option-values"> @for (option of item.optionValues; track option.value) { 
+                        <p>{{ option.value }}</p> 
+                    } 
+                    <p class="tag">Quantity: {{ item.quantity }}</p> 
+                    <p class="tag">Price: ${{ item.totalPrice.toFixed(2) }}</p> 
+                    <div class="quantity-controls"> 
+                        <button (click)="updateQuantity(item.productVariantId, item.quantity - 1)"> - </button> 
+                        <span> {{ item.quantity }} </span> 
+                        <button (click)="updateQuantity(item.productVariantId, item.quantity + 1)"> + </button> 
+                        <button (click)="removeItem(item.productVariantId)"> Remove </button> 
+                    </div> 
+                </li> 
+            } 
+        </ul>
+        @if (currentCart.items.length > 0) {
+            <div class="cart-total">
+                <h3>Total: ${{ currentCart.totalPrice.toFixed(2) }}
+                </h3>
+                <button (click)="clearCart()">Clear Cart</button>
+            </div>
+        }
+        <br>
+        <h2>Cart ({{ itemCount }} items)</h2>
+    </section>
+}
+<section class="checkout">
+
+</section>
+

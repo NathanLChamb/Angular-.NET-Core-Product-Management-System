@@ -1,0 +1,14 @@
+<input type="text" placeholder="Search..." [value]="filter().search"
+    (input)="updateSearch($any($event.target).value)"/>
+
+<section class="product-grid">
+    @if(products.value(); as result) {
+        @for(product of result.items; track product.id) {
+            <article class="product-card" [routerLink]="['/product', product.id]">
+                <h2>{{product.name}}</h2>
+                    <p>{{product.description}}</p>
+                    <p>{{product.productVariants.length}} options available</p>
+            </article>
+        }
+    }
+</section>

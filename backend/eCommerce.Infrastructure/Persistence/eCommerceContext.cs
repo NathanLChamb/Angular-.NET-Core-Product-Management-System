@@ -4,6 +4,8 @@ using eCommerce.Domain.Product;
 using eCommerce.Application.Interfaces;
 using eCommerce.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using eCommerce.Domain.Cart;
+using eCommerce.Domain.Order;
 
 namespace eCommerce.Infrastructure.Persistence
 {
@@ -27,5 +29,9 @@ namespace eCommerce.Infrastructure.Persistence
         public DbSet<ProductOption> ProductOptions { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<ProductVariantOptionValue> ProductVariantOptionValues { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
     }
 }
