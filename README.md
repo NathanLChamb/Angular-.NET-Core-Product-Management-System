@@ -4,6 +4,25 @@ Full-stack product management system built with Angular, ASP.NET Core, and Postg
 
 ---
 
+## Live Demo
+https://angular-net-core-product-management-dbm6.onrender.com
+
+### Demo Accounts
+
+Admin:
+- Email: admin@ecommerce.com
+- Password: Admin123!
+
+Customer:
+- Email: test@example.com
+- Password: Customer123!
+
+Features:
+- Customer registration and authentication
+- Product management for administrators
+- Role-based authorization
+- Dynamic product variants
+
 ## Overview
 
 The goal of this system is to provide a flexible way to manage products with complex variant structures while keeping both frontend and backend models consistent.
@@ -156,18 +175,3 @@ Port: 5432
 
 (PostgreSQL is intended for internal Docker network communication and is accessed by the API container.)
 
-## Demo Accounts
-
-Admin:
-- Email: admin@ecommerce.com
-- Password: Admin123!
-
-Customer:
-- Email: test@example.com
-- Password: Customer123!
-
-Features:
-- Customer registration and authentication
-- Product management for administrators
-- Role-based authorization
-- Dynamic product variants

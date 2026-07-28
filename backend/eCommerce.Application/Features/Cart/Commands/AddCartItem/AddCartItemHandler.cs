@@ -69,24 +69,6 @@ namespace eCommerce.Application.Features.Cart.Commands.AddCartItem
                 .Where(c => c.Id == cart.Id)
                 .ToCartDto()
                 .FirstAsync(ct);
-            //return new ReadCartDto
-            //{
-            //    Id = cart.Id,
-            //    Items = cart.Items.Select(i => new ReadCartItemDto
-            //    {
-            //        Id = i.Id,
-            //        ProductVariantId = i.ProductVariantId,
-            //        ProductName = i.ProductVariant.Product.Name,
-            //        OptionValues = i.ProductVariant.ProductVariantOptionValues.Select(pvov => new ReadOptionValueFromCartDto
-            //        {
-            //            Value = pvov.OptionValue.Value
-            //        }).ToList(),
-            //        UnitPrice = i.ProductVariant.Price,
-            //        Quantity = i.Quantity,
-            //        TotalPrice = i.ProductVariant.Price * i.Quantity
-            //    }).ToList(),
-            //    TotalPrice = cart.Items.Sum(i => i.ProductVariant.Price * i.Quantity)
-            //};
         }
     }
 }
