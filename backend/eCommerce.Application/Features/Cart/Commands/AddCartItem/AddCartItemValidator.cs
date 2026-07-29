@@ -1,6 +1,19 @@
-﻿namespace eCommerce.Application.Features.Cart.Commands.AddCartItem
+﻿using FluentValidation;
+
+namespace eCommerce.Application.Features.Cart.Commands.AddCartItem
 {
-    public class AddCartItemValidator
+    public class AddCartItemValidator : AbstractValidator<AddCartItemCommand>
     {
+        public AddCartItemValidator()
+        {
+            RuleFor(x => x.UserId)
+                .NotEmpty();
+
+            RuleFor(x => x.ProductVariantId)
+                .NotEmpty();
+
+            RuleFor(x => x.Quantity)
+                .GreaterThan(0);
+        }
     }
 }
