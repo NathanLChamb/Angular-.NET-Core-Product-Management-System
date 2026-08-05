@@ -22,5 +22,8 @@ export const routes: Routes = [
     {path: 'cart', loadChildren: () =>
         import('./features/cart/cart.routes').then((m) => m.CartRoutes)
     },
+    {path: 'orders', loadChildren: () =>
+        import('./features/orders/order.routes').then((m) => m.OrdersRoutes)
+    },
     {path: '**', redirectTo: 'login'}
 ];

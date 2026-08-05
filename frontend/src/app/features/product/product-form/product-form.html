@@ -129,3 +129,12 @@
   </section>
   </div>
 </form>
+
+@if (isEditMode() && productId(); as id) {
+
+    <app-product-images
+        [productId]="id">
+    </app-product-images>
+
+}
+

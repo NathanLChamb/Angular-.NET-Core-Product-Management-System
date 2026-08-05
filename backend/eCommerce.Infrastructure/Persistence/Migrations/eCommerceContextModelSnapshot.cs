@@ -358,6 +358,8 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("OrderId");
 
+                    b.HasIndex("ProductVariantId");
+
                     b.ToTable("OrderItems");
                 });
 
@@ -408,6 +410,35 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
                     b.ToTable("ProductCategories");
                 });
 
+            modelBuilder.Entity("eCommerce.Domain.Product.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
+                });
+
             modelBuilder.Entity("eCommerce.Domain.Product.ProductOption", b =>
                 {
                     b.Property<int>("ProductId")
@@ -440,6 +471,12 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
 
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("bytea");
 
                     b.Property<string>("Sku")
                         .IsRequired()
@@ -634,7 +671,15 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("eCommerce.Domain.Product.ProductVariant", "ProductVariant")
+                        .WithMany()
+                        .HasForeignKey("ProductVariantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Order");
+
+                    b.Navigation("ProductVariant");
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Product.ProductCategory", b =>
@@ -652,6 +697,17 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("eCommerce.Domain.Product.ProductImage", b =>
+                {
+                    b.HasOne("eCommerce.Domain.Product.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
@@ -735,6 +791,8 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("eCommerce.Domain.Product.Product", b =>
                 {
                     b.Navigation("ProductCategories");
+
+                    b.Navigation("ProductImages");
 
                     b.Navigation("ProductOptions");
 

@@ -28,7 +28,7 @@ namespace eCommerce.Application.Features.Products.Commands.UpdateProduct
                 {
                     variant.RuleFor(v => v.Sku)
                         .NotEmpty()
-                        .MaximumLength(10);
+                        .MaximumLength(64);
 
                     variant.RuleFor(v => v.Price)
                         .GreaterThanOrEqualTo(0);

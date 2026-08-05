@@ -7,6 +7,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } f
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { catchError, EMPTY, finalize, startWith, tap } from 'rxjs';
 import { ReadProductDto } from '../models';
+import { ProductImages } from '../product-images/product-images';
 
 type ProductFormGroup = FormGroup<{
   name: FormControl<string>;
@@ -27,7 +28,7 @@ type VariantCombination = {
 }
 @Component({
   selector: 'app-product-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ProductImages],
   templateUrl: './product-form.html',
   styleUrl: './product-form.css',
 })
@@ -44,7 +45,14 @@ export class ProductForm {
   get description() { return this.form.controls.description }
   get optionIds() { return this.form.controls.optionIds}
   get productVariants() { return this.form.controls.productVariants }
+
+  protected productId = computed(() => {
+    const id = this.id();
+    return id ? Number(id) : null;
+  });
   
+  
+
   protected form: ProductFormGroup = this.fb.nonNullable.group({
     name: this.fb.nonNullable.control(''),
     description: this.fb.nonNullable.control(''),

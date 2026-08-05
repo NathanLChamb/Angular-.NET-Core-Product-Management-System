@@ -13,9 +13,7 @@ using System.Text;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services,
-        IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<eCommerceContext>(options =>
             options.UseNpgsql(
@@ -25,7 +23,6 @@ public static class DependencyInjection
         services.AddIdentityCore<ApplicationUser>(options =>
         {
             options.User.RequireUniqueEmail = true;
-
             options.Password.RequireDigit = true;
             options.Password.RequireUppercase = true;
             options.Password.RequireLowercase = true;
@@ -37,6 +34,7 @@ public static class DependencyInjection
         .AddDefaultTokenProviders();
 
         services.AddScoped<IIdentityService, IdentityService>();
+        services.AddScoped<ITransactionManager, TransactionManager>();
 
         services.AddAuthentication(options =>
         {

@@ -9,7 +9,8 @@ export interface ReadProductDto {
     updatedAt: string;
     categories: ReadCategoryDto[];
     options: ReadOptionFromProductDto[];
-    productVariants: ReadProductVariantDto[]
+    productVariants: ReadProductVariantDto[];
+    productImages: ProductImageDto[];
 }
 
 export interface ReadOptionFromProductDto {
@@ -64,6 +65,17 @@ export interface ProductSearchFilter {
     sort: ProductSort;
     pageNumber: number;
     pageSize: number;
+}
+
+export interface ProductImageDto {
+    id: number;
+    url: string;
+    displayOrder: number;
+}
+
+export interface AddProductImageDto {
+    url: string;
+    displayOrder: number;
 }
 
 export enum ProductSort {

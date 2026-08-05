@@ -52,7 +52,7 @@ namespace eCommerce.Application.Features.Products.Commands.CreateProduct
             };
 
             _context.Products.Add(newProduct);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(ct);
 
             return await _context.Products
                 .AsNoTracking()

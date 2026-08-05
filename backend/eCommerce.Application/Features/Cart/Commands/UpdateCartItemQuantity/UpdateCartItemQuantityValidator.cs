@@ -1,10 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FluentValidation;
 
 namespace eCommerce.Application.Features.Cart.Commands.UpdateCartItemQuantity
 {
-    internal class UpdateCartItemQuantityValidator
+    public class UpdateCartItemQuantityValidator : AbstractValidator<UpdateCartItemQuantityCommand>
     {
+        public UpdateCartItemQuantityValidator()
+        {
+            RuleFor(x => x.UserId)
+                .NotEmpty();
+
+            RuleFor(x => x.ProductVariantId)
+                .NotEmpty();
+
+            RuleFor(x => x.Quantity)
+                .GreaterThan(0);
+        }
     }
 }

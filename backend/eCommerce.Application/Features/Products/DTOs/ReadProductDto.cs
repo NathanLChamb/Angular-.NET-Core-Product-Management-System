@@ -1,4 +1,5 @@
 ﻿using eCommerce.Application.Features.Categories.DTOs;
+using eCommerce.Application.Features.Products.Images.DTOs;
 
 namespace eCommerce.Application.Features.Products.DTOs
 {
@@ -10,6 +11,7 @@ namespace eCommerce.Application.Features.Products.DTOs
         public List<ReadCategoryDto> Categories { get; set; } = new();
         public List<ReadOptionFromProductDto> Options { get; set; } = new();
         public List<ReadProductVariantDto> ProductVariants { get; set; } = new();
+        public List<ProductImageDto> ProductImages { get; set; } = new();
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }

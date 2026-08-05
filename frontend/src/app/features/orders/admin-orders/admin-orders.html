@@ -1,0 +1,39 @@
+<h1>Orders</h1>
+
+@if(orders.isLoading()) {
+    <p>Loading orders...</p>
+}
+
+@if(orders.value(); as result) {
+    @for(order of result; track order.id) {
+        <section class="order-card">
+            <h2>{{order.orderNumber}}</h2>
+            <p>
+            Total:
+            ${{order.totalPrice.toFixed(2)}}
+            </p>
+            <p>
+            Status:
+            {{order.status}}
+            </p>
+            <h3>Items</h3>
+
+            <ul>
+            @for(item of order.items; track item.id) {
+                <li>
+                {{item.productName}}
+                x{{item.quantity}}
+                -
+                ${{item.totalPrice}}
+                </li>
+            }
+            </ul>
+
+            <select [value]="order.status" (change)="updateStatus(order.id, $any($event.target).value)">
+                @for(status of statuses; track status) {
+                <option [value]="status">{{status}}</option>
+                }
+            </select>
+        </section>
+    }
+}

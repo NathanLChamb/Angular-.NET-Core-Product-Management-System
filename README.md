@@ -90,24 +90,17 @@ Red / Large
 Blue / Small
 Blue / Large
 
-During updates, the backend reconciles:
-
-Product categories
-Product options
-Product variants
-Variant option values
-
-without replacing the entire aggregate.
+During updates the backend reconciles Product categories, options, variants, and option values without replacing the entire aggregate.
 
 ---
 
 ## Shopping Cart
 
-One cart per customer
-Product variant selection
-Quantity updates
-Stock checks
-Total calculation through projections
+- One cart per customer
+- Product variant selection
+- Quantity updates
+- Stock checks
+- Total calculation through projections
 
 ---
 

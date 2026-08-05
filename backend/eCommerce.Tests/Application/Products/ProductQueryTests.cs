@@ -7,7 +7,7 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace eCommerce.Tests.Application
+namespace eCommerce.Tests.Application.Products
 {
     [Collection("Database Collection")]
     public class ProductQueryTests

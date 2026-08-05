@@ -6,8 +6,8 @@ import { adminGuard } from "../../core/guards/admin-guard";
 import { ProductDetails } from "./product-details/product-details";
 
 export const ProductRoutes: Routes = [
-    {path: '', component: ProductList, pathMatch: 'full'},
-    { path: ':id', component: ProductDetails },
     {path: 'create', component: ProductForm, canActivate: [authGuard, adminGuard]},
-    {path: 'edit/:id', component: ProductForm, canActivate: [authGuard, adminGuard]}
+    {path: 'edit/:id', component: ProductForm, canActivate: [authGuard, adminGuard]},
+    {path: ':id', component: ProductDetails},
+    {path: '', component: ProductList, pathMatch: 'full'}
 ]

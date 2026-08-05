@@ -2,12 +2,17 @@
     (input)="updateSearch($any($event.target).value)"/>
 
 <section class="product-grid">
+    @if (products.isLoading()) {
+        <p>Loading...</p>
+    }
     @if(products.value(); as result) {
         @for(product of result.items; track product.id) {
             <article class="product-card" [routerLink]="['/product', product.id]">
-                <h2>{{product.name}}</h2>
-                    <p>{{product.description}}</p>
-                    <p>{{product.productVariants.length}} options available</p>
+                @if(product.productImages.length){
+                    <img [src]="product.productImages[0].url" [alt]="product.name" />
+                }
+                <p>{{product.description}}</p>
+                <p>{{product.productVariants.length}} options available</p>
             </article>
         }
     }

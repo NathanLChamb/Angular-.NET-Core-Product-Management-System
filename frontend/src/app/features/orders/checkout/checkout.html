@@ -1,0 +1,17 @@
+<h1>Checkout</h1>
+
+<label>Shipping Address</label>
+
+<form [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
+    <label>Shipping Address</label>
+    <textarea formControlName="shippingAddress"></textarea>
+    @if(checkoutForm.controls.shippingAddress.invalid && checkoutForm.controls.shippingAddress.touched) {
+        <p>Shipping address is required.</p>
+    }
+    <button type="submit">Place Order</button>
+</form>
+
+<button
+    (click)="submitOrder()">
+    Place Order
+</button>

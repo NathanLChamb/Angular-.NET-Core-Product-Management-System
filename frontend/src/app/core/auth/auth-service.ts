@@ -30,7 +30,7 @@ export class AuthService {
           id: token.sub ?? '',
           email: token.email ?? '',
           displayName: token.name,
-          role: token.role
+          role: token["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
         });
       }
 
@@ -54,10 +54,9 @@ export class AuthService {
               id: token.sub ?? '',
               email: token.email ?? '',
               displayName: token.name,
-              role: token.role
+              role:  token["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
             });
           }
-
         })
       );
   }
@@ -79,7 +78,7 @@ export class AuthService {
               id: token.sub ?? '',
               email: token.email ?? '',
               displayName: token.name,
-              role: token.role
+              role:  token["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
             });
           }
 

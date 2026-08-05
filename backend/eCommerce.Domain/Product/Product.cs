@@ -8,6 +8,7 @@
         public List<ProductOption> ProductOptions { get; set; } = new();
         public List<ProductCategory> ProductCategories { get; set; } = new();
         public List<ProductVariant> ProductVariants { get; set; } = new();
+        public List<ProductImage> ProductImages { get; set; } = new();
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
     }

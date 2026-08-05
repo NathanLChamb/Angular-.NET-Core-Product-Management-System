@@ -1,4 +1,5 @@
 ﻿using eCommerce.Application.Common.Constants;
+using eCommerce.Application.Exceptions;
 using eCommerce.Application.Features.Auth.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -40,7 +41,7 @@ public class IdentityService : IIdentityService
         var existingUser =  await _userManager.FindByEmailAsync(email);
         if (existingUser != null)
         {
-            throw new Exception("Email is already registered.");
+            throw new BusinessRuleException("Email is already registered.");
         }
 
         var user = new ApplicationUser
@@ -54,7 +55,7 @@ public class IdentityService : IIdentityService
         if (!createResult.Succeeded)
         {
             var errors = string.Join(", ", createResult.Errors.Select(e => e.Description));
-            throw new Exception(errors);
+            throw new BusinessRuleException(errors);
         }
 
         var roleResult = await _userManager.AddToRoleAsync(user, Roles.Customer);
@@ -62,7 +63,7 @@ public class IdentityService : IIdentityService
         {
             await _userManager.DeleteAsync(user);
             var errors = string.Join(", ", roleResult.Errors.Select(e => e.Description));
-            throw new Exception($"Failed assigning customer role: {errors}");
+            throw new BusinessRuleException($"Failed assigning customer role: {errors}");
         }
 
         var roles = await _userManager.GetRolesAsync(user);

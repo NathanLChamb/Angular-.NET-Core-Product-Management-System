@@ -9,7 +9,7 @@ using eCommerce.Tests.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace eCommerce.Tests.Application
+namespace eCommerce.Tests.Application.Categories
 {
     [Collection("Database Collection")]
     public class CategoryFeatureTests

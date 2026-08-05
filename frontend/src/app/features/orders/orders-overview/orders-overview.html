@@ -1,0 +1,15 @@
+<h1>Your Orders</h1>
+
+@if(orders.value(); as result) {
+    @for(order of result; track order.id) {
+        <article>
+            <h2>{{order.orderNumber}}</h2>
+            <p>Status: {{order.status}}</p>
+            <p>
+                Total:
+                ${{order.totalPrice.toFixed(2)}}
+            </p>
+            <a [routerLink]="['/orders', order.id]">View</a>
+        </article>
+    }
+}

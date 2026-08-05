@@ -8,7 +8,13 @@
             </tr>
         }
         @if (product.value(); as result) {
-            <h1>{{result.name}}</h1>
+
+            <section class="product-images">
+                @for(image of result.productImages; track image.id) {
+                    <img [src]="image.url" [alt]="result.name" width="250" />
+                }
+            </section>
+
             <p>{{result.description}}</p>
 
             <h2>Select an option</h2>
@@ -32,6 +38,3 @@
                 </div>
             }
 }
-    
-
-

@@ -4,6 +4,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { ProductService } from '../../product/product-service';
 import { CartService } from '../../cart/cart-service';
 import { RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ import { RouterLink } from '@angular/router';
 export class Home {
   private cartService = inject(CartService);
   private productService =inject(ProductService);
+  private http = inject(HttpClient)
 
   protected filter = signal<ProductSearchFilter>({
     search: '',
@@ -67,3 +69,4 @@ export class Home {
     }))
   }
 }
+

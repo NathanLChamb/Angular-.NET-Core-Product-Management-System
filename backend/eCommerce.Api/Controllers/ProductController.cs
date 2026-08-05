@@ -1,9 +1,13 @@
-﻿using eCommerce.Application.Common.Constants;
+﻿using eCommerce.API.Contracts.Products;
+using eCommerce.Application.Common.Constants;
 using eCommerce.Application.Features.Products.Commands.CreateProduct;
 using eCommerce.Application.Features.Products.Commands.DeleteProduct;
 using eCommerce.Application.Features.Products.Commands.UpdateProduct;
 using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Application.Features.Products.Filters;
+using eCommerce.Application.Features.Products.Images.Commands.AddProductImage;
+using eCommerce.Application.Features.Products.Images.Commands.DeleteProductImage;
+using eCommerce.Application.Features.Products.Images.DTOs;
 using eCommerce.Application.Features.Products.Queries.GetAllProducts;
 using eCommerce.Application.Features.Products.Queries.GetProductById;
 using eCommerce.Application.Shared;
@@ -55,6 +59,22 @@ namespace eCommerce.Api.Controllers
         public async Task<IActionResult> DeleteProduct(int id)
         {
             await _mediator.Send(new DeleteProductCommand(id));
+            return NoContent();
+        }
+
+        [Authorize(Roles = Roles.Admin)]
+        [HttpPost("{id:int}/images")]
+        public async Task<ActionResult<ProductImageDto>> AddImage(int id, [FromBody] AddProductImageRequest request, CancellationToken ct)
+        {
+            var image = await _mediator.Send(new AddProductImageCommand(id, request.Url, request.DisplayOrder), ct);
+            return Ok(image);
+        }
+
+        [Authorize(Roles = Roles.Admin)]
+        [HttpDelete("{productId:int}/images/{imageId:int}")]
+        public async Task<IActionResult> DeleteImage(int productId, int imageId, CancellationToken ct)
+        {
+            await _mediator.Send(new DeleteProductImageCommand(productId, imageId), ct);
             return NoContent();
         }
     }

@@ -21,6 +21,11 @@ namespace eCommerce.Infrastructure.Persistence.Configurations
             builder.Property(oi => oi.ProductVariantId)
                 .IsRequired();
 
+            builder.HasOne(oi => oi.ProductVariant)
+                .WithMany()
+                .HasForeignKey(oi => oi.ProductVariantId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Property(oi => oi.ProductName)
                 .IsRequired()
                 .HasMaxLength(500);

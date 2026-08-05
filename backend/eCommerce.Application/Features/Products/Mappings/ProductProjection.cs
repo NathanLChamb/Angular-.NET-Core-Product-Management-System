@@ -1,6 +1,7 @@
 ﻿using eCommerce.Application.Features.Categories.DTOs;
 using eCommerce.Application.Features.Options.DTOs;
 using eCommerce.Application.Features.Products.DTOs;
+using eCommerce.Application.Features.Products.Images.DTOs;
 using eCommerce.Domain.Product;
 
 namespace eCommerce.Application.Features.Products.Mappings
@@ -41,6 +42,12 @@ namespace eCommerce.Application.Features.Products.Mappings
                     CreatedAt = pv.CreatedAt,
                     UpdatedAt = pv.UpdatedAt
                 }).ToList(),
+                ProductImages = p.ProductImages.Select(pi => new ProductImageDto
+                 {
+                     Id = pi.Id,
+                     Url = pi.Url,
+                     DisplayOrder = pi.DisplayOrder
+                 }).ToList(),
             });
         }
     }

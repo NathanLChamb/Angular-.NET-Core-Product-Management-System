@@ -8,14 +8,14 @@ using FluentAssertions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace eCommerce.Tests.Application
+namespace eCommerce.Tests.Application.Products
 {
     [Collection("Database Collection")]
-    public class ProductServiceTests
+    public class ProductCommandTests
     {
         private readonly PostgresContainerFixture _fixture;
 
-        public ProductServiceTests(PostgresContainerFixture fixture)
+        public ProductCommandTests(PostgresContainerFixture fixture)
         {
             _fixture = fixture;
         }

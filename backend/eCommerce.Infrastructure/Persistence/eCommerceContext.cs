@@ -24,7 +24,7 @@ namespace eCommerce.Infrastructure.Persistence
         public DbSet<Option> Options { get; set; }
         public DbSet<OptionValue> OptionValues { get; set; }
         public DbSet<Product> Products { get; set; }
-
+        public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductOption> ProductOptions { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }

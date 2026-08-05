@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { CartService } from '../cart-service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cart-overview',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './cart-overview.html',
   styleUrl: './cart-overview.css',
 })

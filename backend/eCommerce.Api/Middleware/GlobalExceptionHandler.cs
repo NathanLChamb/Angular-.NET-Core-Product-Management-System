@@ -1,4 +1,5 @@
-﻿using eCommerce.Application.Exceptions;
+﻿using eCommerce.Application.Constants;
+using eCommerce.Application.Exceptions;
 using System.Net;
 
 namespace eCommerce.Api.Middleware
@@ -6,13 +7,11 @@ namespace eCommerce.Api.Middleware
     public class GlobalExceptionHandler
     {
         private readonly ILogger<GlobalExceptionHandler> _logger;
-        private readonly IHostEnvironment _env;
         private readonly RequestDelegate _next;
 
-        public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, IHostEnvironment env, RequestDelegate next)
+        public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, RequestDelegate next)
         {
             _logger = logger;
-            _env = env;
             _next = next;
         }
 
@@ -24,25 +23,28 @@ namespace eCommerce.Api.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unhandled exception occurred");
+                var requestId = context.TraceIdentifier;
+                _logger.LogError(ex, "Request {RequestId} failed with exception {ExceptionType}", context.TraceIdentifier, ex.GetType().Name);
+
+                var response = ex switch
+                {
+                    NotFoundException nf => new ErrorResponse(nf.Code, nf.Message, DateTime.UtcNow, requestId),
+                    ValidationRuleException vr => new ErrorResponse(vr.Code, vr.Message, DateTime.UtcNow, requestId),
+                    BusinessRuleException br => new ErrorResponse(br.Code, br.Message, DateTime.UtcNow, requestId),
+                    _ => new ErrorResponse("INTERNAL_ERROR", "An unexpected error occurred", DateTime.UtcNow, requestId)
+                };
 
                 HttpStatusCode statusCode = ex switch
                 {
                     NotFoundException => HttpStatusCode.NotFound,
-                    ValidationException => HttpStatusCode.BadRequest,
+                    ValidationRuleException => HttpStatusCode.BadRequest,
+                    BusinessRuleException => HttpStatusCode.BadRequest,
                     _ => HttpStatusCode.InternalServerError
-                };
-
-                var response = new
-                {
-                    success = false,
-                    message = _env.IsDevelopment() ? ex.Message : "An unexpected error occurred",
-                    inner = _env.IsDevelopment() ? ex.InnerException?.Message : null,
-                    stack = _env.IsDevelopment() ? ex.StackTrace : null
                 };
 
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)statusCode;
+                context.Response.Headers["X-Request-ID"] = requestId;
 
                 await context.Response.WriteAsJsonAsync(response);
             }
