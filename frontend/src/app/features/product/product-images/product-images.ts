@@ -11,7 +11,7 @@ import { EMPTY } from 'rxjs';
   styleUrl: './product-images.css',
 })
 export class ProductImages {
-   private productService = inject(ProductService);
+  private productService = inject(ProductService);
   private fb = inject(FormBuilder);
 
   productId = input.required<number>();
@@ -24,75 +24,53 @@ export class ProductImages {
   protected product = rxResource({
     params: () => {
       const id = this.productId();
-
       return id ? { id } : null;
     },
-
     stream: ({ params }) => {
       if (!params) {
         return EMPTY;
       }
-
       return this.productService.GetProductById(params.id);
     }
   });
 
-
   protected sortedImages = computed(() => {
-
     const product = this.product.value();
-
     if (!product) {
       return [];
     }
-
     return [...product.productImages].sort(
       (a, b) => a.displayOrder - b.displayOrder
     );
-
   });
 
-
   protected addImage() {
-
     if (this.imageForm.invalid) {
       return;
     }
 
     const productId = this.productId();
-
     const dto = this.imageForm.getRawValue();
 
-    this.productService
-      .AddProductImage(productId, {
+    this.productService.AddProductImage(productId, {
         url: dto.url!,
         displayOrder: dto.displayOrder ?? 0
       })
       .subscribe(() => {
-
         this.imageForm.reset({
           url: '',
           displayOrder: 0
         });
-
         this.product.reload();
-
       });
-
   }
-
 
   protected deleteImage(imageId: number) {
 
     const productId = this.productId();
 
-    this.productService
-      .DeleteProductImage(productId, imageId)
-      .subscribe(() => {
-
+    this.productService.DeleteProductImage(productId, imageId).subscribe(() => {
         this.product.reload();
-
-      });
-
+    });
   }
 }

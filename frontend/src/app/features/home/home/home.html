@@ -11,8 +11,17 @@
                 @if(product.productImages.length){
                     <img [src]="product.productImages[0].url" [alt]="product.name" />
                 }
-                <p>{{product.description}}</p>
-                <p>{{product.productVariants.length}} options available</p>
+                <p>{{product.productVariants.length - 1}} other
+                    @for (option of product.options; track option.id) {
+                        {{option.name.toLowerCase()}}s @if (!$last) { / }
+                    }
+                available
+                </p>
+                <p>{{product.description}},  
+                    @for (option of product.options; track option.id) {
+                        {{option.name.toLowerCase()}} @if (!$last) {, }
+                    }   
+                </p>
             </article>
         }
     }

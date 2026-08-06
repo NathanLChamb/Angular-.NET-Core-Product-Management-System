@@ -10,6 +10,7 @@
                 <li class="welcome">
                     Welcome, {{ authService.user()?.displayName }}
                 </li>
+                <li><button type="button" (click)="logout()">LOGOUT</button></li>
                 <li><a routerLink="/cart">CART</a></li>
                 <li><a routerLink="/orders">ORDERS</a></li>
             }
