@@ -9,7 +9,6 @@ import { Environment } from '../../../environments/environment';
 })
 export class OrderService {
   private apiUrl = `${Environment.apiBaseUrl}/orders`;
-
   private http = inject(HttpClient);
 
   getMyOrders(): Observable<ReadOrderDto[]> {
@@ -25,20 +24,14 @@ export class OrderService {
   }
 
   cancelOrder(id: number): Observable<ReadOrderDto> {
-    return this.http.post<ReadOrderDto>(
-      `${this.apiUrl}/${id}/cancel`,
-      {}
-    );
+    return this.http.post<ReadOrderDto>(`${this.apiUrl}/${id}/cancel`, {});
   }
 
   getAllOrders(): Observable<ReadOrderDto[]> {
     return this.http.get<ReadOrderDto[]>( `${this.apiUrl}/admin`);
   }
 
-  updateOrderStatus(id: number, status: string): Observable<ReadOrderDto> {
-    return this.http.put<ReadOrderDto>(`${this.apiUrl}/${id}/status`, {
-        status
-      }
-    );
+  updateOrderStatus(id: number, status: number): Observable<ReadOrderDto> {
+    return this.http.put<ReadOrderDto>(`${this.apiUrl}/${id}/status`, { status });
   }
 }

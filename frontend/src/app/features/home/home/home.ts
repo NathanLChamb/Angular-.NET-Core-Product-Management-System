@@ -1,10 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
-import { ProductSearchFilter, ProductSort } from '../../product/models';
+import { Component, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ProductService } from '../../product/product-service';
 import { CartService } from '../../cart/cart-service';
 import { RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { ProductFilterService } from '../../product/product-filter-service';
 
 @Component({
   selector: 'app-home',
@@ -15,21 +14,12 @@ import { HttpClient } from '@angular/common/http';
 export class Home {
   private cartService = inject(CartService);
   private productService =inject(ProductService);
-  private http = inject(HttpClient)
+  private filterService = inject(ProductFilterService);
 
-  protected filter = signal<ProductSearchFilter>({
-    search: '',
-    categoryIds: [],
-    optionIds: [],
-    sort: ProductSort.Default,
-    pageNumber: 1,
-    pageSize: 12
-  });
-
-  protected products = rxResource({
-    params: () => this.filter(),
+   protected products = rxResource({
+    params: () => this.filterService.filter(),
     stream: ({ params }) => this.productService.GetAllProducts(params)
-  });
+  }); 
 
   addToCart(productVariantId: number) {
     this.cartService.AddItem({
@@ -39,31 +29,15 @@ export class Home {
       .subscribe();
   }
 
-  protected updateSearch(search: string) {
-    this.filter.update(f => ({
-      ...f,
-      search,
-      pageNumber: 1
-    }));
-  }
-
-  protected updateSort(sort: ProductSort) {
-    this.filter.update(f => ({
-      ...f,
-      sort,
-      pageNumber: 1
-    }));
-  }
-
   protected previousPage() {
-    this.filter.update(f => ({
+    this.filterService.filter.update(f => ({
       ...f,
       pageNumber: Math.max(1, f.pageNumber - 1)
     })) 
   }
 
   protected nextPage() {
-    this.filter.update(f => ({
+    this.filterService.filter.update(f => ({
       ...f,
       pageNumber: f.pageNumber + 1
     }))

@@ -9,6 +9,6 @@ import { authGuard } from "../../core/guards/auth-guard";
 export const OrdersRoutes: Routes = [
     { path: '', component: OrdersOverview },
     { path: 'checkout', component: Checkout },
-    { path: ':id', component: OrderDetails },
-    { path: 'admin', component: AdminOrders, canActivate: [authGuard, adminGuard]}
+    { path: 'admin', component: AdminOrders, canActivate: [authGuard, adminGuard]},
+    { path: ':id', component: OrderDetails }
 ];

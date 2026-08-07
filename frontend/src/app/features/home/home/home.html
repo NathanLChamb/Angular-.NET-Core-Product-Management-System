@@ -1,6 +1,3 @@
-<input type="text" placeholder="Search..." [value]="filter().search"
-    (input)="updateSearch($any($event.target).value)"/>
-
 <section class="product-grid">
     @if (products.isLoading()) {
         <p>Loading...</p>

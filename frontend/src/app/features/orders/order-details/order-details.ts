@@ -2,6 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { OrderService } from '../order-service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-order-details',
@@ -19,9 +20,12 @@ export class OrderDetails {
       const id = this.id();
       return id ? Number(id) : null;
     },
-
-    stream: ({params}) =>
-      this.orderService.getOrderById(params!)
+    stream: ({ params }) => {
+      if (params === null) {
+        return EMPTY;
+      }
+      return this.orderService.getOrderById(params);
+    }
   });
 
 
