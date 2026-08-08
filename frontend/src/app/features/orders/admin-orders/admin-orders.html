@@ -1,40 +1,80 @@
 <h1>Orders</h1>
 
-@if(orders.isLoading()) {
-    <p>Loading orders...</p>
-}
+<button
+    type="button"
+    [class.active]="filter().status === OrderStatusFilter.All"
+    (click)="setStatus(OrderStatusFilter.All)">
+    All
+  </button>
 
-@if(orders.value(); as result) {
-    @for(order of result; track order.id) {
-        <section class="order-card">
-            <div [routerLink]="['/orders', order.id]" class="order-info">
-                <h2>{{order.orderNumber}}</h2>
-                <p>Total: ${{order.totalPrice.toFixed(2)}}</p>
-                <p>Status: {{order.status}}</p>
-            </div>
+  <button
+    type="button"
+    [class.active]="filter().status === OrderStatusFilter.Working"
+    (click)="setStatus(OrderStatusFilter.Working)">
+    Working
+  </button>
 
-            <h3>Items</h3>
+  <button
+    type="button"
+    [class.active]="filter().status === OrderStatusFilter.Completed"
+    (click)="setStatus(OrderStatusFilter.Completed)">
+    Completed
+  </button>
 
-            <ul>
-                @for(item of order.items; track item.id) {
-                    <li>
-                        {{item.productName}}
-                        x{{item.quantity}}
-                        - ${{item.totalPrice}}
-                    </li>
-                }
-            </ul>
+  <button
+    type="button"
+    [class.active]="filter().status === OrderStatusFilter.Cancelled"
+    (click)="setStatus(OrderStatusFilter.Cancelled)">
+    Cancelled
+  </button>
 
-            <select 
-                [value]="order.status"
-                (change)="updateStatus(order.id, +$any($event.target).value)">
-                
-                @for(status of statuses; track status.value) {
-                    <option [value]="status.value">
-                    {{status.label}}
-                    </option>
-                }
-            </select>
-        </section>
-    }
-}
+<table>
+    <thead>
+        <tr>
+            <th>Created</th>
+            <th>Order</th>
+            <th>Sku</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (orders.isLoading()) {
+            <p>Loading...</p>
+        }
+        @if (orders.value(); as result) {
+            <div class="order-filters">
+  
+</div>
+            @for (order of result.items; track order.id) {                   
+                    @for (item of order.items; track $index) {
+                        <tr>
+                            <td>{{order.orderDate | date:'short'}}</td>
+                            <td [routerLink]="['/orders', order.id]">{{order.orderNumber}}</td>
+                            <td>{{item.sku}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>
+                                <select 
+                                    [value]="order.status"
+                                    (change)="updateStatus(order.id, +$any($event.target).value)">
+                                    
+                                    @for(status of statuses; track status.value) {
+                                        <option [value]="status.value">
+                                        {{status.label}}
+                                        </option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                    }
+                    
+                    
+                    <!-- <td>{{category.name}}</td>
+                    <td>{{category.description}}</td>
+                    <td>
+                        <button type="button" [routerLink]="['edit', category.id]">Edit</button>
+                        <button type="button" (click)="handleDelete(category.id)">Delete</button>
+                    </td> -->
+            }
+        }
+    </tbody>
+</table>

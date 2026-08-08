@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { catchError, EMPTY, finalize, startWith, tap } from 'rxjs';
-import { ProductOptionValueImageDto, ReadProductDto, ReadProductVariantDto } from '../models';
+import { ReadProductDto } from '../models';
 import { ProductImages } from '../product-images/product-images';
 
 type ProductFormGroup = FormGroup<{
@@ -197,18 +197,6 @@ export class ProductForm {
       'productVariants',
       this.fb.array(nextControls)
     )
-  }
-
-  protected getVariantDto(formVariant: ProductVariantForm): ReadProductVariantDto | null {
-    const variantId = formVariant.controls.id.value;
-
-    if (!variantId) {
-      return null;
-    }
-
-    return this.product.value()?.productVariants.find(
-      variant => variant.id === variantId
-    ) ?? null;
   }
 
   constructor() {

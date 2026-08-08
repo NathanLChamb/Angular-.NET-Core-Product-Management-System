@@ -31,7 +31,7 @@ export class Login {
     this.authService.login(this.loginForm.getRawValue())
       .subscribe({
         next: () => {
-          this.router.navigate(['/category']);
+          this.router.navigate(['']);
         },
         error: (error) => {
           console.error(error);

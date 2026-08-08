@@ -1,8 +1,8 @@
-﻿namespace eCommerce.Api.Contracts.Products;
-
-public class AddProductImageRequest
+﻿namespace eCommerce.Api.Contracts.Products
 {
-    public string Url { get; set; } = null!;
-    public int DisplayOrder { get; set; }
-    
+    public class AddProductImageRequest
+    {
+        public string Url { get; set; } = null!;
+        public int DisplayOrder { get; set; }
+    }
 }

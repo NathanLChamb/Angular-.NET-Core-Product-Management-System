@@ -3,9 +3,11 @@ using eCommerce.Application.Common.Constants;
 using eCommerce.Application.Features.Orders.Commands.CancelOrder;
 using eCommerce.Application.Features.Orders.Commands.CreateOrder;
 using eCommerce.Application.Features.Orders.Commands.UpdateOrderStatus;
+using eCommerce.Application.Features.Orders.Filters;
 using eCommerce.Application.Features.Orders.Queries.GetAllOrders;
 using eCommerce.Application.Features.Orders.Queries.GetMyOrders;
 using eCommerce.Application.Features.Orders.Queries.GetOrderById;
+using eCommerce.Application.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -56,9 +58,9 @@ public class OrdersController : ControllerBase
 
     [Authorize(Roles = Roles.Admin)]
     [HttpGet("admin")]
-    public async Task<IActionResult> GetAllOrders(CancellationToken ct)
+    public async Task<ActionResult<PagedResult<ReadOrderFromAdminDto>>> GetAllOrders([FromQuery] OrderSearchFilter filter, CancellationToken ct)
     {
-        var result = await _mediator.Send(new GetAllOrdersQuery(), ct);
+        var result = await _mediator.Send(new GetAllOrdersQuery(filter), ct);
         return Ok(result);
     }
 

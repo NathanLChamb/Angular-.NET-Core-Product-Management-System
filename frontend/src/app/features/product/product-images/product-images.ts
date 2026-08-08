@@ -15,6 +15,7 @@ export class ProductImages {
 
   product = input.required<ReadProductDto>();
   imagesChanged = output<void>();
+  protected editingImageId = signal<number | null>(null);
   protected selectedOptionValues = signal<Map<number, number>>(new Map());
 
   protected imageForm = this.fb.nonNullable.group({
@@ -55,52 +56,100 @@ export class ProductImages {
     return [...this.selectedOptionValues().values()];
   }
 
-  protected addImage() {
-    if (this.imageForm.invalid) {
-      return;
-    }
-
-    const optionValueIds = this.getSelectedOptionValueIds();
-
-    if (optionValueIds.length === 0) {
-      return;
-    }
-
-    const dto = {
-      url: this.imageForm.controls.url.value,
-      isDefault: this.imageForm.controls.isDefault.value,
-      optionValueIds
-    };
-
-    this.productService
-      .AddProductOptionValueImage(this.product().id, dto)
-      .subscribe({
-        next: () => {
-          this.imageForm.reset({
-            url: '',
-            isDefault: false
-          });
-
-          this.selectedOptionValues.set(new Map());
-
-          this.imagesChanged.emit();
-        }
-      });
+  protected saveImage() {
+  if (this.imageForm.invalid) {
+    return;
   }
 
-  protected deleteImage(imageId: number) {
+  const optionValueIds = this.getSelectedOptionValueIds();
+
+  if (optionValueIds.length === 0) {
+    return;
+  }
+
+  const dto = {
+    url: this.imageForm.controls.url.value,
+    isDefault: this.imageForm.controls.isDefault.value,
+    optionValueIds
+  };
+
+  const editingId = this.editingImageId();
+
+  if (editingId !== null) {
 
     this.productService
-      .DeleteProductOptionValueImage(
+      .UpdateProductOptionValueImage(
         this.product().id,
-        imageId
+        editingId,
+        dto
       )
       .subscribe({
         next: () => {
+          this.resetImageForm();
+          this.imagesChanged.emit();
+        }
+      });
+
+  } else {
+
+    this.productService
+      .AddProductOptionValueImage(
+        this.product().id,
+        dto
+      )
+      .subscribe({
+        next: () => {
+          this.resetImageForm();
           this.imagesChanged.emit();
         }
       });
   }
+}
+
+  protected editImage(image: ProductOptionValueImageDto) {
+    this.editingImageId.set(image.id);
+
+    this.imageForm.patchValue({
+      url: image.url,
+      isDefault: image.isDefault
+    });
+
+    this.selectedOptionValues.set(
+      new Map(
+        this.getImageOptionValues(image).map(value => [
+          value.optionId,
+          value.id
+        ])
+      )
+    );
+  }
+
+  protected resetImageForm() {
+    this.imageForm.reset({
+      url: '',
+      isDefault: false
+    });
+
+    this.selectedOptionValues.set(new Map());
+    this.editingImageId.set(null);
+  }
+
+  protected deleteImage(imageId: number) {
+  this.productService
+    .DeleteProductOptionValueImage(
+      this.product().id,
+      imageId
+    )
+    .subscribe({
+      next: () => {
+        if (this.editingImageId() === imageId) {
+          this.resetImageForm();
+        }
+
+        this.imagesChanged.emit();
+      }
+    });
+}
 
   protected getImageOptionValues(image: ProductOptionValueImageDto) {
     return image.optionValueIds.map(id => {

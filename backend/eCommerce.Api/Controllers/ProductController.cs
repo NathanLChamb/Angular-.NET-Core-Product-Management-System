@@ -9,6 +9,7 @@ using eCommerce.Application.Features.Products.Images.Commands.AddProductImage;
 using eCommerce.Application.Features.Products.Images.Commands.AddProductOptionValueImage;
 using eCommerce.Application.Features.Products.Images.Commands.DeleteProductImage;
 using eCommerce.Application.Features.Products.Images.Commands.DeleteProductOptionValueImage;
+using eCommerce.Application.Features.Products.Images.Commands.UpdateProductOptionValueImage;
 using eCommerce.Application.Features.Products.Images.DTOs;
 using eCommerce.Application.Features.Products.Queries.GetAllProducts;
 using eCommerce.Application.Features.Products.Queries.GetProductById;
@@ -94,6 +95,21 @@ namespace eCommerce.Api.Controllers
         {
             await _mediator.Send(new DeleteProductOptionValueImageCommand(productId, imageId), ct);
             return NoContent();
+        }
+
+        [Authorize(Roles = Roles.Admin)]
+        [HttpPut("{productId:int}/option-value-images/{imageId:int}")]
+        public async Task<ActionResult<ProductOptionValueImageDto>> UpdateProductOptionValueImage(
+            int productId, 
+            int imageId,
+            UpdateProductOptionValueImageRequest request,
+            CancellationToken ct)
+        {
+            var image = await _mediator.Send(new UpdateProductOptionValueImageCommand(
+                productId, imageId, request.Url, 
+                request.IsDefault, request.OptionValueIds), ct);
+
+            return Ok(image);
         }
     }
 }

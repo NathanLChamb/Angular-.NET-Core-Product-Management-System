@@ -20,6 +20,7 @@
 
           <p>Display Order: {{ image.displayOrder }}</p>
 
+          <button type="button" (click)="editImage(image)">Edit</button>
           <button type="button" (click)="deleteImage(image.id)">Delete</button>
         </article>
       }
@@ -47,7 +48,7 @@
   }
 
   <h3>Add Option Value Image</h3>
-  <form [formGroup]="imageForm" (ngSubmit)="addImage()">
+  <form [formGroup]="imageForm" (ngSubmit)="saveImage()">
     <div>
       <label for="image-url">Image URL</label>
       <input id="image-url" type="text" formControlName="url" placeholder="https://example.com/image.jpg"/>
@@ -58,6 +59,12 @@
         <input type="checkbox" formControlName="isDefault"/>Default product image</label>
     </div>
 
-    <button type="submit" [disabled]="imageForm.invalid || selectedOptionValues().size === 0">Add Image</button>
+    <button type="submit" [disabled]="imageForm.invalid || selectedOptionValues().size === 0">
+        {{ editingImageId() !== null ? 'Update Image' : 'Add Image' }}
+    </button>
+
+    @if (editingImageId() !== null) {
+        <button type="button" (click)="resetImageForm()">Cancel</button>
+    }
   </form>
 </section>

@@ -1,7 +1,10 @@
-﻿using MediatR;
+﻿using eCommerce.Application.Features.Orders.Filters;
+using eCommerce.Application.Shared;
+using MediatR;
 
 namespace eCommerce.Application.Features.Orders.Queries.GetAllOrders
 {
-    public record GetAllOrdersQuery()
-        : IRequest<List<ReadOrderFromAdminDto>>;
+    public record GetAllOrdersQuery(
+        OrderSearchFilter Filter
+    ) : IRequest<PagedResult<ReadOrderFromAdminDto>>;
 }

@@ -42,6 +42,12 @@ export interface ProductOptionValueImageDto {
   optionValueIds: number[];
 }
 
+export interface UpdateProductOptionValueImageDto {
+  url: string;
+  isDefault: boolean;
+  optionValueIds: number[];
+}
+
 export interface ProductVariantImageDto {
   id: number;
   url: string;

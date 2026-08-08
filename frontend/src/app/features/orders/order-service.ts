@@ -1,8 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateOrderDto, ReadOrderDto } from './models';
+import { CreateOrderDto, OrderSearchFilter, ReadOrderDto, ReadOrderFromAdminDto } from './models';
 import { HttpClient } from '@angular/common/http';
 import { Environment } from '../../../environments/environment';
+import { PagedResult } from '../../shared/models/paged-result';
 
 @Injectable({
   providedIn: 'root',
@@ -27,9 +28,16 @@ export class OrderService {
     return this.http.post<ReadOrderDto>(`${this.apiUrl}/${id}/cancel`, {});
   }
 
-  getAllOrders(): Observable<ReadOrderDto[]> {
-    return this.http.get<ReadOrderDto[]>( `${this.apiUrl}/admin`);
-  }
+  public getAllOrders(params: OrderSearchFilter): Observable<PagedResult<ReadOrderFromAdminDto>> {
+  return this.http.get<PagedResult<ReadOrderFromAdminDto>>(`${this.apiUrl}/admin`, {
+      params: {
+        status: params.status,
+        pageNumber: params.pageNumber,
+        pageSize: params.pageSize
+      }
+    }
+  );
+}
 
   updateOrderStatus(id: number, status: number): Observable<ReadOrderDto> {
     return this.http.put<ReadOrderDto>(`${this.apiUrl}/${id}/status`, { status });
