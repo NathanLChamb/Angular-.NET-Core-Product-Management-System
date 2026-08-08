@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Application.Features.Products.Images.Commands.DeleteProductImage;
 
-public class DeleteProductImageHandler
-    : IRequestHandler<DeleteProductImageCommand>
+public class DeleteProductImageHandler : IRequestHandler<DeleteProductImageCommand>
 {
     private readonly IeCommerceContext _context;
     public DeleteProductImageHandler(IeCommerceContext context)

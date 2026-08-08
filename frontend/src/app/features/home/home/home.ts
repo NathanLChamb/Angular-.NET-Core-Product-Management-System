@@ -4,6 +4,7 @@ import { ProductService } from '../../product/product-service';
 import { CartService } from '../../cart/cart-service';
 import { RouterLink } from '@angular/router';
 import { ProductFilterService } from '../../product/product-filter-service';
+import { ReadProductDto } from '../../product/models';
 
 @Component({
   selector: 'app-home',
@@ -16,10 +17,26 @@ export class Home {
   private productService =inject(ProductService);
   private filterService = inject(ProductFilterService);
 
-   protected products = rxResource({
+  protected products = rxResource({
     params: () => this.filterService.filter(),
     stream: ({ params }) => this.productService.GetAllProducts(params)
-  }); 
+  });
+
+  protected getDefaultImage(product: ReadProductDto): string | null {
+    const images = product.productOptionValueImages ?? [];
+
+    if (!images.length) {
+      return null;
+    }
+
+    return [...images]
+      .sort((a, b) => {
+        if (a.optionValueIds.length !== b.optionValueIds.length) {
+          return a.optionValueIds.length - b.optionValueIds.length;
+        }
+        return a.displayOrder - b.displayOrder;
+      })[0]?.url ?? null;
+  }
 
   addToCart(productVariantId: number) {
     this.cartService.AddItem({

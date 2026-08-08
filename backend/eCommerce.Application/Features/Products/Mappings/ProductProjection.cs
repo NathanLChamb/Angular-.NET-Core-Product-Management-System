@@ -34,20 +34,31 @@ namespace eCommerce.Application.Features.Products.Mappings
                     Sku = pv.Sku,
                     Price = pv.Price,
                     StockQuantity = pv.StockQuantity,
-                    OptionValues = pv.ProductVariantOptionValues.Select(pvov => new ReadOptionValueDto
+                    OptionValues = pv.ProductVariantOptionValues.Select(pvov => new ReadOptionValueFromProductVariantDto
                     {
                         Id = pvov.OptionValue.Id,
-                        Value = pvov.OptionValue.Value
+                        Value = pvov.OptionValue.Value,
+                        OptionId = pvov.OptionValue.OptionId,
+                        OptionName = pvov.OptionValue.Option.Name
                     }).ToList(),
                     CreatedAt = pv.CreatedAt,
                     UpdatedAt = pv.UpdatedAt
                 }).ToList(),
                 ProductImages = p.ProductImages.Select(pi => new ProductImageDto
-                 {
-                     Id = pi.Id,
-                     Url = pi.Url,
-                     DisplayOrder = pi.DisplayOrder
-                 }).ToList(),
+                {
+                    Id = pi.Id,
+                    Url = pi.Url,
+                    DisplayOrder = pi.DisplayOrder
+                }).ToList(),
+                ProductOptionValueImages = p.ProductOptionValueImages.Select(image => new ProductOptionValueImageDto
+                {
+                    Id = image.Id,
+                    Url = image.Url,
+                    DisplayOrder = image.DisplayOrder,
+                    IsDefault = image.IsDefault,
+                    OptionValueIds = image.OptionValues.Select(x => x.OptionValueId).ToList()
+                })
+                .ToList(),
             });
         }
     }

@@ -3,7 +3,7 @@ import { Environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PagedResult } from '../../shared/models/paged-result';
-import { AddProductImageDto, CreateProductDto, ProductImageDto, ProductSearchFilter, ReadProductDto, UpdateProductDto } from './models';
+import { AddProductOptionValueImageDto, CreateProductDto, ProductSearchFilter, ReadProductDto, UpdateProductDto } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -42,11 +42,11 @@ export class ProductService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`)
   }
 
-  public AddProductImage(productId: number, dto: AddProductImageDto): Observable<ProductImageDto> {
-    return this.http.post<ProductImageDto>(`${this.apiUrl}/${productId}/images`, dto);
+  public AddProductOptionValueImage(productId: number, dto: AddProductOptionValueImageDto): Observable<AddProductOptionValueImageDto> {
+    return this.http.post<AddProductOptionValueImageDto>(`${this.apiUrl}/${productId}/option-value-images`, dto);
   }
 
-  public DeleteProductImage(productId: number, imageId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${productId}/images/${imageId}`);
+  public DeleteProductOptionValueImage(productId: number, imageId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${productId}/option-value-images/${imageId}`);
   }
 }

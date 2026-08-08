@@ -33,5 +33,9 @@ namespace eCommerce.Infrastructure.Persistence
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<CatalogAttribute> CatalogAttributes { get; set; }
+        public DbSet<ProductCatalogAttribute> ProductCatalogAttributes { get; set; }
+        public DbSet<ProductOptionValueImage> ProductOptionValueImages { get; set; }
+        public DbSet<ProductOptionValueImageOptionValue> ProductOptionValueImageOptionValues { get; set; }
     }
 }

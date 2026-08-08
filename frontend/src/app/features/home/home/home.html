@@ -5,8 +5,15 @@
     @if(products.value(); as result) {
         @for(product of result.items; track product.id) {
             <article class="product-card" [routerLink]="['/product', product.id]">
-                @if(product.productImages.length){
-                    <img [src]="product.productImages[0].url" [alt]="product.name" />
+                @if (product.productOptionValueImages.find(i => i.isDefault); as image) {
+                    <img
+                        [src]="image.url"
+                        [alt]="product.name"
+                    />
+                } @else {
+                    <div class="image-placeholder">
+                        No image available
+                    </div>
                 }
                 <p>{{product.productVariants.length - 1}} other
                     @for (option of product.options; track option.id) {

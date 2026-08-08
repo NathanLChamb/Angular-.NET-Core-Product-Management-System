@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using eCommerce.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using eCommerce.Infrastructure.Persistence;
 namespace eCommerce.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(eCommerceContext))]
-    partial class eCommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20260807191444_AddProductAttributesAndVariantImages")]
+    partial class AddProductAttributesAndVariantImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -492,50 +495,6 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
                     b.ToTable("ProductOptions");
                 });
 
-            modelBuilder.Entity("eCommerce.Domain.Product.ProductOptionValueImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductOptionValueImages");
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Product.ProductOptionValueImageOptionValue", b =>
-                {
-                    b.Property<int>("ProductOptionValueImageId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OptionValueId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ProductOptionValueImageId", "OptionValueId");
-
-                    b.HasIndex("OptionValueId");
-
-                    b.ToTable("ProductOptionValueImageOptionValues");
-                });
-
             modelBuilder.Entity("eCommerce.Domain.Product.ProductVariant", b =>
                 {
                     b.Property<int>("Id")
@@ -579,6 +538,32 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
                     b.HasIndex("ProductId", "Sku");
 
                     b.ToTable("ProductVariants");
+                });
+
+            modelBuilder.Entity("eCommerce.Domain.Product.ProductVariantImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductVariantId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductVariantId");
+
+                    b.ToTable("ProductVariantImages");
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Product.ProductVariantOptionValue", b =>
@@ -832,36 +817,6 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("eCommerce.Domain.Product.ProductOptionValueImage", b =>
-                {
-                    b.HasOne("eCommerce.Domain.Product.Product", "Product")
-                        .WithMany("ProductOptionValueImages")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("eCommerce.Domain.Product.ProductOptionValueImageOptionValue", b =>
-                {
-                    b.HasOne("eCommerce.Domain.Metadata.OptionValue", "OptionValue")
-                        .WithMany("ProductOptionValues")
-                        .HasForeignKey("OptionValueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("eCommerce.Domain.Product.ProductOptionValueImage", "ProductOptionValueImage")
-                        .WithMany("OptionValues")
-                        .HasForeignKey("ProductOptionValueImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OptionValue");
-
-                    b.Navigation("ProductOptionValueImage");
-                });
-
             modelBuilder.Entity("eCommerce.Domain.Product.ProductVariant", b =>
                 {
                     b.HasOne("eCommerce.Domain.Product.Product", "Product")
@@ -871,6 +826,17 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("eCommerce.Domain.Product.ProductVariantImage", b =>
+                {
+                    b.HasOne("eCommerce.Domain.Product.ProductVariant", "ProductVariant")
+                        .WithMany("ProductVariantImages")
+                        .HasForeignKey("ProductVariantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductVariant");
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Product.ProductVariantOptionValue", b =>
@@ -916,8 +882,6 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("eCommerce.Domain.Metadata.OptionValue", b =>
                 {
-                    b.Navigation("ProductOptionValues");
-
                     b.Navigation("ProductVariantOptionValues");
                 });
 
@@ -934,20 +898,15 @@ namespace eCommerce.Infrastructure.Persistence.Migrations
 
                     b.Navigation("ProductImages");
 
-                    b.Navigation("ProductOptionValueImages");
-
                     b.Navigation("ProductOptions");
 
                     b.Navigation("ProductVariants");
                 });
 
-            modelBuilder.Entity("eCommerce.Domain.Product.ProductOptionValueImage", b =>
-                {
-                    b.Navigation("OptionValues");
-                });
-
             modelBuilder.Entity("eCommerce.Domain.Product.ProductVariant", b =>
                 {
+                    b.Navigation("ProductVariantImages");
+
                     b.Navigation("ProductVariantOptionValues");
                 });
 #pragma warning restore 612, 618

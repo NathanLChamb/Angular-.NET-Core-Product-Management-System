@@ -11,6 +11,7 @@ export interface ReadProductDto {
     options: ReadOptionFromProductDto[];
     productVariants: ReadProductVariantDto[];
     productImages: ProductImageDto[];
+    productOptionValueImages: ProductOptionValueImageDto[];
 }
 
 export interface ReadOptionFromProductDto {
@@ -24,7 +25,34 @@ export interface ReadProductVariantDto {
     stockQuantity: number;
     createdAt: string;
     updatedAt: string;
-    optionValues: ReadOptionValueDto[]
+    optionValues: ReadOptionValueFromProductVariantDto[];
+    productVariantImages: ProductVariantImageDto[];
+}
+
+export interface AddProductOptionValueImageDto {
+  url: string;
+  optionValueIds: number[];
+}
+
+export interface ProductOptionValueImageDto {
+  id: number;
+  url: string;
+  displayOrder: number;
+  isDefault: boolean;
+  optionValueIds: number[];
+}
+
+export interface ProductVariantImageDto {
+  id: number;
+  url: string;
+  displayOrder: number;
+}
+
+export interface ReadOptionValueFromProductVariantDto {
+    id: number;
+    value: string;
+    optionId: number;
+    optionName: string;
 }
 
 export interface CreateProductDto {
@@ -73,7 +101,7 @@ export interface ProductImageDto {
     displayOrder: number;
 }
 
-export interface AddProductImageDto {
+export interface AddProductVariantImageDto {
     url: string;
     displayOrder: number;
 }

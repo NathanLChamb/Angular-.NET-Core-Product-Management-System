@@ -18,6 +18,9 @@ namespace eCommerce.Application.Interfaces
         DbSet<Order> Orders { get; }
         DbSet<OrderItem> OrderItems { get; }
         DbSet<ProductImage> ProductImages { get; }
+        DbSet<ProductOptionValueImage> ProductOptionValueImages { get; }
+        DbSet<CatalogAttribute> CatalogAttributes { get; }
+        DbSet<ProductOption> ProductOptions { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

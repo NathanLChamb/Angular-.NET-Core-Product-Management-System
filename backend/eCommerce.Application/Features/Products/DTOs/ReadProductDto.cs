@@ -12,6 +12,7 @@ namespace eCommerce.Application.Features.Products.DTOs
         public List<ReadOptionFromProductDto> Options { get; set; } = new();
         public List<ReadProductVariantDto> ProductVariants { get; set; } = new();
         public List<ProductImageDto> ProductImages { get; set; } = new();
+        public List<ProductOptionValueImageDto> ProductOptionValueImages { get; set; } = new();
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }

@@ -9,5 +9,6 @@ namespace eCommerce.Domain.Metadata
         public int OptionId { get; set; }
         public Option Option { get; set; } = null!;
         public List<ProductVariantOptionValue> ProductVariantOptionValues { get; set; } = new();
+        public List<ProductOptionValueImageOptionValue> ProductOptionValues { get; set; } = new();
     }
 }

@@ -2,8 +2,7 @@
 
 namespace eCommerce.Application.Features.Products.Images.Commands.AddProductImage
 {
-    public class AddProductImageValidator
-        : AbstractValidator<AddProductImageCommand>
+    public class AddProductImageValidator : AbstractValidator<AddProductImageCommand>
     {
         public AddProductImageValidator()
         {

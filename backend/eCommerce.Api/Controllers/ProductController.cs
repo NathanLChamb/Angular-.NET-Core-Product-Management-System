@@ -1,4 +1,4 @@
-﻿using eCommerce.API.Contracts.Products;
+﻿using eCommerce.Api.Contracts.Products;
 using eCommerce.Application.Common.Constants;
 using eCommerce.Application.Features.Products.Commands.CreateProduct;
 using eCommerce.Application.Features.Products.Commands.DeleteProduct;
@@ -6,7 +6,9 @@ using eCommerce.Application.Features.Products.Commands.UpdateProduct;
 using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Application.Features.Products.Filters;
 using eCommerce.Application.Features.Products.Images.Commands.AddProductImage;
+using eCommerce.Application.Features.Products.Images.Commands.AddProductOptionValueImage;
 using eCommerce.Application.Features.Products.Images.Commands.DeleteProductImage;
+using eCommerce.Application.Features.Products.Images.Commands.DeleteProductOptionValueImage;
 using eCommerce.Application.Features.Products.Images.DTOs;
 using eCommerce.Application.Features.Products.Queries.GetAllProducts;
 using eCommerce.Application.Features.Products.Queries.GetProductById;
@@ -75,6 +77,22 @@ namespace eCommerce.Api.Controllers
         public async Task<IActionResult> DeleteImage(int productId, int imageId, CancellationToken ct)
         {
             await _mediator.Send(new DeleteProductImageCommand(productId, imageId), ct);
+            return NoContent();
+        }
+
+        [Authorize(Roles = Roles.Admin)]
+        [HttpPost("{productId:int}/option-value-images")]
+        public async Task<ActionResult<ProductOptionValueImageDto>> AddOptionValueImage(int productId, [FromBody] AddProductOptionValueImageRequest request, CancellationToken ct)
+        {
+            var image = await _mediator.Send(new AddProductOptionValueImageCommand(productId, request.Url, request.IsDefault, request.OptionValueIds), ct);
+            return Ok(image);
+        }
+
+        [Authorize(Roles = Roles.Admin)]
+        [HttpDelete("{productId:int}/option-value-images/{imageId:int}")]
+        public async Task<IActionResult> DeleteOptionValueImage(int productId, int imageId, CancellationToken ct)
+        {
+            await _mediator.Send(new DeleteProductOptionValueImageCommand(productId, imageId), ct);
             return NoContent();
         }
     }

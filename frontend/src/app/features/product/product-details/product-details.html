@@ -1,40 +1,171 @@
 @if (product.error()) {
-    <p>Products retrieval error</p>
+<p>Products retrieval error</p>
 }
 
 @if (product.isLoading()) {
-            <tr>
-                <td colspan="9">Loading...</td>
-            </tr>
+<p>Loading...</p>
+}
+
+@if (product.value(); as result) {
+
+<h1>{{ result.name }}</h1>
+
+<p>{{ result.description }}</p>
+
+
+<section class="product-images">
+
+    @if (selectedOptionValueImages().length) {
+
+        @for (
+            image of selectedOptionValueImages();
+            track image.id
+        ) {
+
+            <img
+                [src]="image.url"
+                [alt]="result.name"
+                width="250"
+            />
+
         }
-        @if (product.value(); as result) {
 
-            <section class="product-images">
-                @for(image of result.productImages; track image.id) {
-                    <img [src]="image.url" [alt]="result.name" width="250" />
+    } @else {
+
+        <div class="image-placeholder">
+            No image available
+        </div>
+
+    }
+
+</section>
+
+
+<section class="product-options">
+
+    @for (option of result.options; track option.id) {
+
+        <section class="option-group">
+
+            <h3>
+                {{ option.name }}
+            </h3>
+
+
+            <div class="option-values">
+
+                @for (
+                    value of getOptionValues(option.id);
+                    track value.id
+                ) {
+
+                    @if (
+                        option.name.toLowerCase() === 'color'
+                    ) {
+
+                        <button
+                            type="button"
+                            class="color-swatch"
+                            [class.selected]="
+                                isSelected(
+                                    option.id,
+                                    value.id
+                                )
+                            "
+                            [style.background-color]="value.value"
+                            [title]="value.value"
+                            (click)="
+                                selectOption(
+                                    option.id,
+                                    value.id
+                                )
+                            "
+                        >
+                        </button>
+
+                    } @else {
+
+                        <button
+                            type="button"
+                            class="option-button"
+                            [class.selected]="
+                                isSelected(
+                                    option.id,
+                                    value.id
+                                )
+                            "
+                            (click)="
+                                selectOption(
+                                    option.id,
+                                    value.id
+                                )
+                            "
+                        >
+
+                            {{ value.value }}
+
+                        </button>
+
+                    }
+
                 }
-            </section>
 
-            <p>{{result.description}}</p>
+            </div>
 
-            <h2>Select an option</h2>
+        </section>
 
-            @for (variant of result.productVariants; track variant.id) {
-                <div>
-                    <p>SKU: {{ variant.sku }}</p>
+    }
 
-                    <p>Price: {{ variant.price }}</p>
+</section>
 
-                    <p>
-                        Options:
-                        @for (option of variant.optionValues; track option.id) {
-                        {{ option.value }}
-                        }
-                    </p>
 
-                    <button (click)="addToCart(variant.id)">
-                        Add to Cart
-                    </button>
-                </div>
-            }
+@if (selectedVariant(); as variant) {
+
+    <section class="selected-variant">
+
+        <p>
+            SKU:
+            {{ variant.sku }}
+        </p>
+
+
+        <p>
+            Price:
+            ${{ variant.price }}
+        </p>
+
+
+        <p>
+            Stock:
+            {{ variant.stockQuantity }}
+        </p>
+
+
+        <button
+            type="button"
+            (click)="addToCart(variant.id)"
+        >
+
+            Add to Cart
+
+        </button>
+
+    </section>
+
+} @else {
+
+    <p>
+        Please select all options.
+    </p>
+
+
+    <button
+        type="button"
+        disabled
+    >
+        Add to Cart
+    </button>
+
+}
+
 }
